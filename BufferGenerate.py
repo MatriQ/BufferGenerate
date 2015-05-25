@@ -22,10 +22,13 @@ def getAllTemplateFiles(path):
 				result.add(m.group())
 	return result
 
-def genCodeFile(f):
+def genCodeFile(filename):
+	path=os.getcwd()+"/templates/"+filename
+	f=open(path)
 	line=f.readline()
 	lineNum=0
 	Temp={}
+	Temp["Class"]=filename.split(".")[0]
 	Temp["Fileds"]={}
 	while line!='':
 		if not re.compile(r'^(##.+)|([\r\n])$').match(line):
@@ -36,16 +39,48 @@ def genCodeFile(f):
 				#print(line.split(":"))
 				if len(line.split(":"))>1:
 					Temp["Fileds"][line.split(":")[0]]=line.split(":")[1]
-		lineNum+=1
+			lineNum+=1
 		line=f.readline()
 	return Temp
+
+##read content of lang
+def getTmplContent(lang):
+	path=os.getcwd()+"/"+lang+".tmpl"
+	f=open(path)
+	content=f.read()
+	f.close()
+	return content
 
 allTemplates=getAllTemplateFiles(".")
 
 for filename in allTemplates:
-	path=os.getcwd()+"/templates/"+filename
-	f=open(path)
 	#dir(f)
-	tmp=genCodeFile(f)
-	print(tmp)
+	tmp=genCodeFile(filename)
+	#print(tmp)
+	content=getTmplContent("go")
+	content=re.compile(r"\$PACKAGENAME\$").sub(tmp["package"],content)
+	content=re.compile(r"\$CLASSNAME\$").sub(tmp["Class"],content)
+	forcontents=re.findall(r'(<\s*for\s+(\$\w+?\$)\s+:\s+(\$\w+?\$)\s*>(.*?)</\s*for\s*>)',content,re.S)
+	
+	if forcontents:
+		#print(forcontents[0])
+		for forcontent in forcontents:
+			var=forcontent[1]
+			col=forcontent[2]
+			subcontent=forcontent[3].rstrip("\n")
+
+			newContent=""
+			if col=="$Fields$":	
+				for (filed,T) in tmp["Fileds"].items():
+					str=subcontent.replace("$PACKAGENAME$",tmp["package"])
+					#print(str.strip("\n"))
+					str=str.replace("$CLASSNAME$",tmp["package"])
+					str=str.replace(var+".$FieldsName$",filed)
+					str=str.replace(var+".$FieldsType$",T)
+					newContent+=str
+			content=content.replace(forcontent[0],newContent)
+
+	print(content)
+	print("....................")
+	#break
 
