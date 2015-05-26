@@ -1,1 +1,33 @@
 
+namespace $PACKAGENAME$
+{
+	class $CLASSNAME$
+	{
+		public:
+			$CLASSNAME$(){};
+			~$CLASSNAME$(){};
+			void Reset()
+			{
+
+			};
+			$CLASSNAME$* Clone()
+			{
+
+			}
+		private:
+			<for $item$ : $Fields$>	
+			$item$.$FieldsType$ _$item$.$FieldsName$;
+			</for>
+		public:
+			<for $item$ : $Fields$>	
+			$item$.$FieldsType$ Get$item$.$FieldsName$()
+			{
+				return _$item$.$FieldsName$;
+			}
+			void Set$item$.$FieldsName$($item$.$FieldsType$ ___$item$.$FieldsName$)
+			{
+				_$item$.$FieldsName$=___$item$.$FieldsName$;
+			}
+			</for>
+	}
+}
