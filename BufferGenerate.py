@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Date    : 2015-05-12 18:35:26
 # @Author  : Matrixdom (Matrixdom@126.com)
-# @Link    : 
 # @Version : 0.1
 # coding=utf-8
 

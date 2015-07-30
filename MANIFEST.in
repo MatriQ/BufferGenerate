@@ -1,0 +1,3 @@
+include go.tmpl
+include lua.tmpl
+include cpp.tmpl
