@@ -55,3 +55,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+.idea
+/.idea/dictionaries/Matri.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+.DS_Store
