@@ -201,24 +201,27 @@ def main():
 
         parser.add_argument("source", 
                             help="xml source",
-                            nargs="?")
+                            nargs="+")
 
         parser.add_argument("-t","-tmpl",
                             required=True,
-                            nargs="?",
+                            nargs="+",
                             dest="template",
                             help="used tmpls") 
 
         parser.add_argument("-r","-regex",
                             dest="regex",
                             help="regex") 
-        
+
         parser.add_argument("-d","-dir",
                             dest="targetdir",
                             default="",
                             help="target dir") 
         args = parser.parse_args(argvs) 
-        print(args.source)
+
+        for s in args.source:
+            print s
+        
 
     except Exception, e:
         print e
