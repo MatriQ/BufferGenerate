@@ -5,7 +5,7 @@
 # @Version : 0.1
 
 import os
-
+from os import path
 from distutils.core import setup
 
 setup(name='BufferGenerate',

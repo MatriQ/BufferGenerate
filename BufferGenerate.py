@@ -10,6 +10,8 @@ import os
 import sys
 import os.path
 import traceback
+import argparse  
+import  xml.dom.minidom
 
 from time import time
 from optparse import OptionParser
@@ -18,7 +20,6 @@ from optparse import OptionParser
 VERSION = '0.1'
 
 templateFilePattern = re.compile("^\w+\.tmp$")
-
 
 class ClassInfo:
     _feilds = []
@@ -48,6 +49,7 @@ class FeildInfo:
 
     def getclassinfo(self):
         return self._classinfo
+
 
 # 获取所有模板名
 def getalltemplatefiles(path):
@@ -179,23 +181,52 @@ def main():
         print("%s" % VERSION)
         #DataStatistic.terminate_stat()
         #sys.exit(0)
-    parser = OptionParser()
 
-    parser.add_option('-r', '--remove-download',
-                      action="store", type="string", dest='remove_downloaded', default=None,
-                      help="Whether to remove downloaded zip file, 'yes' or 'no'")
+    try:
+        #command = sys.argv[1]
+        argvs = sys.argv[1:]
+        if len(argvs)==0:
+            print ("Args cannot empty")
+            return
+        #args 1:xml source
+        #args 2: tmpl files,  xx[,xx...]
+        #args [-r  xx]:regex for name
+        #args [-d  xx]:target dir
 
-    parser.add_option("-f", "--force-update",
-                      action="store_true", dest="force_update", default=False,
-                      help="Whether to force update the third party libraries")
+        parser = argparse.ArgumentParser(description="This is a description of %(prog)s", 
+            epilog="This is a epilog of %(prog)s", 
+            prefix_chars="-+", 
+            fromfile_prefix_chars="@", 
+            formatter_class=argparse.ArgumentDefaultsHelpFormatter)  
 
-    parser.add_option("-d", "--download-only",
-                      action="store_true", dest="download_only", default=False,
-                      help="Only download zip file of the third party libraries, will not extract it")
+        parser.add_argument("source", 
+                            help="xml source",
+                            nargs="?")
 
-    (opts, args) = parser.parse_args()
-    print opts.remove_downloaded, opts.force_update, opts.download_only
-    print args
+        parser.add_argument("-t","-tmpl",
+                            required=True,
+                            nargs="?",
+                            dest="template",
+                            help="used tmpls") 
+
+        parser.add_argument("-r","-regex",
+                            dest="regex",
+                            help="regex") 
+        
+        parser.add_argument("-d","-dir",
+                            dest="targetdir",
+                            default="",
+                            help="target dir") 
+        args = parser.parse_args(argvs) 
+        print(args.source)
+
+    except Exception, e:
+        print e
+    else:
+        pass
+    finally:
+        pass
+   
 # -------------- main --------------
 if __name__ == '__main__':
     try:
