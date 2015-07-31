@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.player" id="102">
+	<bean name="PlayerInfo" explain="角色信息">
+		<field name="userId" class="long" explain="用户id"></field>
+		<field name="roleId" class="long" explain="角色id"></field>
+		<field name="level" class="int" explain="等级"></field>
+		<field name="firstExp" class="int" explain="当前经验"></field>
+		<field name="roleName" class="String" explain="角色名称"></field>
+		<field name="money" class="int" explain="银币"></field>
+		<field name="dollar" class="int" explain="元宝"></field>
+		<field name="shengwang" class="int" explain="声望"></field>
+		<field name="rongyu" class="int" explain="荣誉"></field>
+		<field name="playerType" class="int" explain="所属门派"></field>
+		<field name="fightBossNum" class="byte" explain="剩余挑战boss次数"></field>
+		<field name="celerityNum" class="byte" explain="剩余快速战斗次数"></field>
+		<field name="firstEquipNum" class="byte" explain="剩余打造次数"></field>
+		<field name="teamFightNum" class="byte" explain="剩余团队竞技次数"></field>
+		<field name="areaFightNum" class="byte" explain="剩余个人竞技次数"></field>
+		<field name="exchangeMoneyNum" class="byte" explain="剩余兑换银币次数"></field>
+		<field name="firstBuyBossNum" class="byte" explain="剩余购买boss次数"></field>
+		<field name="maxFirstBuyBossNum" class="byte" explain="最大购买boss次数"></field>
+		<field name="maxFightBossNum" class="byte" explain="最大挑战boss次数"></field>
+		<field name="maxCelerityNum" class="byte" explain="最大快速战斗次数"></field>
+		<field name="maxFirstEquipNum" class="byte" explain="最大打造次数"></field>
+		<field name="maxTeamFightNum" class="byte" explain="最大团队竞技次数"></field>
+		<field name="maxAreaFightNum" class="byte" explain="最大个人竞技次数"></field>
+		<field name="maxExchangeMoneyNum" class="byte" explain="最大兑换银币次数"></field>
+		<field name="vimFirstExp" class="int" explain="vip当前经验"></field>
+		<field name="vimFirstLv" class="byte" explain="vip当前等级"></field>
+		<field name="fightTeam" class="int" explain="最大组别"></field>
+		<field name="fightMapId" class="int" explain="当前战斗副本"></field>
+		<field name="aptitudeNum" class="short" explain="添加资质属性点"></field>
+		<field name="equipValues" class="int" explain="玩家的装备熔炼值"></field>
+		<field name="isGang" class="byte" explain="是否有帮派0否1是"></field>
+		<field name="playerUserName" class="String" explain="用户账号"></field>
+		<field name="xmrefrensToken" class="String" explain="熊猫刷新token"></field>
+		<list name="drawGiftIds" class="short" explain="已领取礼包id"></list>
+		<list name="propUseNum" class="PropUseNum" explain="道具使用数量"></list>
+		<list name="firstPlay" class="FirstPlay" explain="首冲列表"></list>
+		<list name="otherStatus" class="int" explain="角色已存在状态标示"></list>
+	</bean>
+	
+	<bean name="OtherPlayerInfo" explain="它人角色信息">
+		<field name="roleId" class="long" explain="角色id"></field>
+		<field name="level" class="int" explain="等级"></field>
+		<field name="roleName" class="String" explain="角色名称"></field>
+		<field name="playerType" class="int" explain="所属门派"></field>
+	</bean>
+	<bean name="FirstPlay" explain="首次充值">
+		<field name="sid" class="int" explain="充值配置表id(金额)"></field>
+		<field name="isFirst" class="byte" explain="是否首冲0没有充值过1充值过了"></field>
+	</bean>
+	<bean name="PropUseNum" explain="道具使用次数">
+		<field name="propId" class="int" explain="道具id"></field>
+		<field name="propNum" class="byte" explain="道具剩余使用数量"></field>
+	</bean>
+	
+	<bean name="GuaJiSetBean" explain="挂机设置">	
+		<field name="sellBaise" class="byte" explain="是否出售白色装备0否。1是"></field>
+		<field name="sellLvse" class="byte" explain="是否出售绿色装备0否。1是"></field>
+		<field name="sellLanse" class="byte" explain="是否出售蓝色装备0否。1是"></field>
+		<field name="sellZise" class="byte" explain="是否出售紫色装备0否。1是"></field>
+		<field name="sellNOThis" class="byte" explain="是不是本职业0否,1是"></field>
+		<field name="isMsg" class="byte" explain="是否关闭聊天0否1是"></field>
+		<field name="isAddress" class="byte" explain="是否显示自己地址0否，1是"></field>
+		<field name="isMusic" class="byte" explain="是否关闭音乐0否，1是"></field>
+		<field name="isMusicEffect" class="byte" explain="是否关闭音效0否，1是"></field>
+		<field name="force" class="int" explain="邀请入队对方战力"></field>
+	</bean>
+	
+	<bean name="PlayerAttbute" explain="角色的属性">
+		<field name="configAttType" class="short" explain="人物属性类型"></field>
+		<field name="configAttValue" class="int" explain="人物属性值"></field>
+	</bean>
+	<message id="101" name="ReqUpTeamId" type="CS" explain="更新队伍id">
+		<field name="teamId" class="long" explain="队伍id"></field>
+	</message>
+	<message id="102" name="ReqOtherInfo" type="CS" explain="请求它人角色信息">
+		<field name="otherPlayerId" class="long" explain="它人角色id"></field>
+	</message>
+	
+	<message id="103" name="ReqSaveGuaJiSeting" type="CS" explain="保存挂机设置">
+		<field name="guaJiSetBean" class="GuaJiSetBean" explain="挂机设置"></field>
+	</message>
+	
+	<message id="104" name="ReqMySignIn" type="CS" explain="请求签到"></message>
+	
+	<message id="105" name="ReqCDKExchange" type="CS" explain="请求cdk兑换">
+		<field name="cdk" class="String" explain="cdk码"></field>
+	</message>
+	
+	<message id="106" name="ReqRefrensTime" type="CS" explain="请求刷新时间">
+	</message>
+	
+	<message id="107" name="ReqAllocationAtt" type="CS" explain="分配属性">
+		<list name="playerAttbute" class="PlayerAttbute" explain="分配的属性结果（返回操作成功）"></list>
+	</message>
+	
+	<message id="108" name="ReqDrawLvGift" type="CS" explain="领取等级礼包">
+		<field name="lvSid" class="short" explain="等级礼包id"></field>
+	</message>
+	
+	<message id="109" name="ReqPlayerBuff" type="CS" explain="获取角色拥有加成buff">
+	</message>
+	
+	<message id="110" name="ResPlayerInfo" type="SC" explain="角色信息返回">
+		<field name="playerInfo" class="PlayerInfo" explain="角色信息"></field>
+		<list name="playerAttbute" class="PlayerAttbute" explain="人物属性"></list>
+	</message>
+	
+	<message id="111" name="ResAttbuteUp" type="SC" explain="变化后的属性">
+		<list name="playerAttbute" class="PlayerAttbute" explain="变化后的属性"></list>
+	</message>
+	
+	<message id="201" name="ResOtherPlayer" type="SC" explain="返回它人角色信息">
+		<field name="otherPlayerInfo" class="OtherPlayerInfo" explain="它人角色信息"></field>
+		<field name="jingmaiMinPinjie" class="byte" explain="经脉最小品阶"></field>
+		<list name="titleIds" class="int" explain="穿戴的称号"></list>
+		<list name="playerAttbute" class="PlayerAttbute" explain="人物属性"></list>
+	</message>
+	
+	<message id="202" name="ResGuaJiSeting" type="SC" explain="返回挂机设置">
+		<field name="guaJiSetBean" class="GuaJiSetBean" explain="返回挂机设置"></field>
+	</message>
+	
+	<message id="203" name="ResPropUseNum" type="SC" explain="道具当前使用次数返回">
+		<field name="propUseNum" class="PropUseNum" explain="道具当前使用次数"></field>
+	</message>
+	
+	<message id="204" name="ResRefrensTime" type="SC" explain="获取倒计时">
+		<field name="teamUpLv" class="int" explain="组队升级倒计时"></field>
+		<field name="shopRefrens" class="int" explain="商城刷新倒计时"></field>
+		<field name="bossRefrens" class="int" explain="boss倒计时"></field>
+		<field name="chouJiang" class="int" explain="抽奖倒计时"></field>
+	</message>
+	
+	<message id="205" name="ResUpFirstPlay" type="SC" explain="更新首次充值列表">
+		<field name="firstPlay" class="FirstPlay" explain="首次充值信息"></field>
+	</message>
+	
+	<message id="206" name="ResPassLvGift" type="SC" explain="已领取礼包添加">
+		<field name="lvGiftId" class="short" explain="领取成功的礼包"></field>
+	</message>
+	
+	<message id="207" name="ResPlayerBuffs" type="SC" explain="返回角色拥有加成buff">
+		<field name="lv" class="short" explain="角色与最高等级的差距"></field>
+		<field name="exp" class="short" explain="获得经验加成百分比"></field>
+	</message>
+	
+	<message id="208" name="ResOtherStatus" type="SC" explain="更新角色已存在状态">
+		<field name="type" class="byte" explain="1。添加。2删除"></field>
+		<field name="otherStatus" class="int" explain="状态值"></field>
+	</message>
+	
+	<message id="209" name="ResServerOpenDay" type="SC" explain="服务器已开启天">
+		<field name="openDay" class="int" explain="服务器已开启多少天"></field>
+	</message>
+	
+	<message id="210" name="ResSevenLoginInfo" type="SC" explain="7天登录信息">
+		<field name="loginInfo" class="String" explain="7天登录和领取奖励信息"></field>
+	</message>
+</messages>

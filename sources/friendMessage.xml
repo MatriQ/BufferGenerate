@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.friend" id="119">
+	
+	<bean name="MyFriendBean" explain="我的好友">
+		<field name="playerId" class="long" explain="好友id"></field>
+		<field name="name" class="String" explain="好友名称"></field>
+		<field name="vipLv" class="byte" explain="好友vip等级"></field>
+		<field name="force" class="int" explain="好友战力"></field>
+		<field name="loveNum" class="int" explain="友好度"></field>
+		<field name="playerLv" class="int" explain="角色等级"></field>
+		<field name="playerType" class="byte" explain="角色职业"></field>
+		<field name="isOnline" class="byte" explain="是否在线0否1是"></field>
+	</bean>
+	
+	<bean name="MsgRecordBean" explain="我的消息记录">
+		<field name="recordId" class="long" explain="消息记录id"></field>
+		<field name="toPlayerId" class="long" explain="对方的角色id"></field>
+		<field name="status" class="byte" explain="0.对方给我的申请，1我已经同意的申请，2。别人接受了我的申请，3别人拒绝了我的申请"></field>
+		<field name="playerName" class="String" explain="角色名称"></field>
+		<field name="applyTime" class="String" explain="申请时间"></field>
+	</bean>
+	
+	<bean name="ReCommInfo" explain="推荐信息">
+		<field name="playerId" class="long" explain="推荐id"></field>
+		<field name="name" class="String" explain="推荐名称"></field>
+		<field name="force" class="int" explain="推荐战力"></field>
+		<field name="playerLv" class="int" explain="推荐等级"></field>
+		<field name="playerType" class="byte" explain="角色职业"></field>
+		<list name="titleId" class="int" explain="穿戴称谓"></list>
+	</bean>
+	
+	<bean name="MyHireBean" explain="我的雇佣信息">
+		<field name="toPlayer" class="long" explain="玩家id"></field>
+		<field name="name" class="String" explain="名称"></field>
+		<field name="force" class="int" explain="战力"></field>
+		<field name="playerLv" class="int" explain="角色等级"></field>
+		<field name="playerType" class="byte" explain="角色职业"></field>
+		<field name="isBattle" class="byte" explain="是否上阵0否1是"></field>
+	</bean>
+	
+	<message id="101" name="ReqApplyFriend" type="CS" explain="申请好友">
+		<field name="toPlayerId" class="long" explain="被申请人id"></field>
+	</message>
+	
+	<message id="102" name="ReqAcceptOrRefuse" type="CS" explain="接受或者拒绝">
+		<field name="type" class="byte" explain="0拒绝1接受"></field>
+		<field name="recordId" class="long" explain="消息记录id"></field>
+	</message>
+ 	
+ 	<message id="103" name="ReqOpenFriendList" type="CS" explain="打开好友列表">
+ 	</message>
+ 	
+ 	<message id="104" name="ReqRecommList" type="CS" explain="获取在线推荐列表">
+ 	</message>
+ 	
+ 	<message id="105" name="ReqApplyFriendByName" type="CS" explain="角色名查找添加">
+ 		<field name="playerName" class="String" explain="角色名查找添加"></field>
+ 	</message>
+ 	
+ 	<message id="106" name="ReqExtensionFriend" type="CS" explain="扩充最大好友数">
+ 	</message>
+ 	
+ 	<message id="107" name="ReqHirePlayer" type="CS" explain="雇佣出战人员">
+ 		<field name="toPlayerId" class="long" explain="雇佣玩家id"></field>
+ 	</message>
+ 	
+ 	<message id="108" name="ReqHireList" type="CS" explain="打开雇佣列表">
+ 	</message>
+ 	
+ 	<message id="109" name="ReqBattleList" type="CS" explain="设置出战列表">
+ 		<field name="oneId" class="long" explain="第一个出战玩家id"></field>
+ 		<field name="twoId" class="long" explain="第二个出战玩家id"></field>
+ 	</message>
+ 	
+ 	
+  	<message id="110" name="ReqSendPresent" type="CS" explain="赠礼">
+ 		<field name="toPlayerId" class="long" explain="送礼给的好友"></field>
+ 	</message>
+ 	<message id="111" name="ReqDelFriend" type="CS" explain="删除好友">
+ 		<field name="toPlayerId" class="long" explain="好友的id"></field>
+ 	</message>
+ 	
+	<message id="201" name="ResFriendsList" type="SC" explain="返回好友列表">
+		<list name="myFriends" class="MyFriendBean" explain="好友列表"></list>
+	</message>
+	
+	<message id="202" name="ResDelFriend" type="SC" explain="删除好友">
+		<field name="toPlayerId" class="long" explain="好友列表中删除好友"></field>
+	</message>
+	
+	<message id="203" name="ResAddFriend" type="SC" explain="添加好友">
+		<field name="myFriend" class="MyFriendBean" explain="好友列表中删除好友"></field>
+	</message>
+
+	<message id="204" name="ResApplyMsg" type="SC" explain="返回我的消息记录">
+		<list name="msgRecords" class="MsgRecordBean" explain="所有的消息记录"></list>
+	</message>
+	
+	<message id="205" name="ResUpApplyMsgStatus" type="SC" explain="更新记录消息状态">
+		<field name="recordId" class="long" explain="消息记录id"></field>
+		<field name="status" class="byte" explain="0.对方给我的申请，1.我同意的申请,2.对方接受我的申请。3.对方拒绝我的申请，4.我拒绝对方的申请"></field>
+	</message>
+	
+	<message id="206" name="ResDelApplyMsg" type="SC" explain="删除记录消息">
+		<field name="recordId" class="long" explain="消息记录id"></field>
+	</message>
+	
+	<message id="207" name="ResAddRecordMsg" type="SC" explain="添加消息记录">
+		<field name="recordmsg" class="MsgRecordBean" explain="消息记录"></field>
+	</message>
+	
+	<message id="208" name="ResReCommList" type="SC" explain="返回推荐信息列表">
+		<list name="reCommInfos" class="ReCommInfo" explain="推荐信息"></list>
+	</message>
+	
+	<message id="209" name="ResHirePlayerList" type="SC" explain="返回已雇佣列表">
+		<list name="myHireBeans" class="MyHireBean" explain="我雇佣的所有玩家"></list>
+	</message>
+</messages>

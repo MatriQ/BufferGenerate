@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.fight" id="103">
+	
+	<bean name="FigtLog" explain="出手战斗的日志信息  ">
+		<field name="isAttact" class="byte" explain="是否能攻击,0能攻击,1不能攻击"></field>
+		<field name="challenger" class="Oneself" explain="挑战者自己的信息"></field> 
+		<list name="mengyou" class="JoinWar" explain="盟友信息"></list>
+		<list name="enemyInfos" class="JoinWar" explain="敌人信息"></list>
+	</bean>
+	<bean name="FightBuff" explain="战斗者的buff">
+		<field name="buffEffect" class="byte" explain="0.表示没有.效果号1普通攻击 2武功攻击 。3添加属性buff。4持续添加属性buff,5控制类buff"></field>
+		<field name="bufferType" class="byte" explain="0,表示没有.1.普通攻击(0.普通伤害，1暴击。2闪避)2武功攻击(0.普通伤害，1暴击。2闪避)3添加属性buff(按照装备属性表) 4持续添加属性buff(按照装备属性表) 5控制类buff(1重伤2内伤3封穴4解封)"></field>
+		<field name="bufferValue" class="int" explain="0不显示1或2显示图片,其他显示值包含负数"></field>
+	</bean>
+	<bean name="JoinWar" explain="参战信息">
+		<field name="joinWarId" class="long" explain="参战id"></field>
+		<field name="status" class="byte" explain="当前状态0普通，1死亡"></field>
+		<list name="fightBuffs" class="FightBuff" explain="盟友的buff信息"></list>
+		<field name="life" class="int" explain="当前气血"></field>
+		<field name="mana" class="int" explain="当前魔法"></field>
+	</bean>
+	
+	<bean name="Oneself" explain="挑战者信息">
+		<field name="challengerId" class="long" explain="挑战者id"></field>
+		<field name="status" class="byte" explain="当前状态0普通，1死亡"></field>
+		<field name="skillId" class="int" explain="释放的技能id"></field>
+		<list name="fightBuffs" class="FightBuff" explain="挑战者buff信息"></list>
+		<field name="life" class="int" explain="当前气血"></field>
+		<field name="mana" class="int" explain="当前魔法"></field>
+	</bean>
+	
+	<bean name="FigtSimpleInfo" explain="参与战斗者简要信息">
+		<field name="fightId" class="long" explain="战斗者id"></field>
+		<field name="isMaxTitle" class="byte" explain="头像0小，1大"></field>
+		<field name="figtName" class="String" explain="战斗者名称"></field>
+		<field name="level" class="int" explain="战斗者等级"></field>
+		<field name="headId" class="int" explain="头像id"></field>
+		<field name="life" class="int" explain="血量"></field>
+		<field name="mana" class="int" explain="法力"></field>
+		<field name="firstLife" class="int" explain="当前血量"></field>
+		<field name="firstMana" class="int" explain="当前法力"></field>
+	</bean>
+	
+	<bean name="Huihe" explain="回合信息">
+		<list name="figtLog" class="FigtLog" explain="双方对战日志"></list>
+	</bean>
+	
+	<bean name="VsInfoLog" explain="当前对战信息日志">
+		<list name="challenger" class="FigtSimpleInfo" explain="挑战者信息"></list>
+		<list name="toChallenger" class="FigtSimpleInfo" explain="被挑战者信息"></list>
+		<list name="hehui" class="Huihe" explain="总回合"></list>
+	</bean>
+
+	<bean name="FigtEquip" explain="战斗装备信息">
+		<field name="type" class="byte" explain="白色1.绿色2.蓝色3.紫色4.橙器5"></field>
+		<field name="number" class="short" explain="获得数量"></field>
+	</bean>
+	<bean name="FightGoods" explain="战斗获得物品信息">
+		<field name="goodsId" class="int" explain="物品资源id1-2W装备2-3W道具"></field>
+		<field name="number" class="short" explain="获得数量"></field>
+	</bean>
+	<message id="101" name="ReqEnterMap" type="CS" explain="切换战斗副本">
+		<field name="sid" class="int" explain="副本id标示"></field>
+	</message>
+	
+	<message id="102" name="ReqStartFight" type="CS" explain="开始战斗">
+	</message>
+	<message id="103" name="ReqCelerity" type="CS" explain="快速战斗">
+	</message>
+	<message id="104" name="ReqOpenFightStati" type="CS" explain="打开战斗统计">
+	</message>
+	<message id="105" name="ReqEexFightResult" type="CS" explain="执行战斗结果"></message>
+	
+	<message id="106" name="ReqShaoDang" type="CS" explain="扫荡">
+		<field name="mapId" class="int" explain="扫荡的地图id"></field>
+	</message>
+	
+	<message id="107" name="ReqPlayFightLog" type="CS" explain="查看录像">
+		<field name="fightId" class="long" explain="录像的id"></field>
+	</message>
+	
+	<message id="108" name="ReqUpFightStatus" type="CS" explain="改变战斗状态">
+		<field name="status" class="byte" explain="0战斗中,1倒计时中"></field>
+	</message>
+	
+	<message id="109" name="ReqTeamFight" type="CS" explain="请求组队副本">
+		<field name="sid" class="int" explain="副本id"></field>
+	</message>
+	
+	<message id="110" name="ReqFightBoss" type="CS" explain="请求挑战boss">
+	</message>
+	
+	<message id="111" name="ReqEliteBoss" type="CS" explain="请求挑战精英boss">
+	</message>
+	
+	<message id="112" name="ReqFindBossRate" type="CS" explain="查看boss胜率">
+	</message>
+	
+	<message id="201" name="ResResult" type="SC" explain="返回战斗结果">
+		<field name="money" class="int" explain="银币"></field>
+		<field name="exp" class="int" explain="经验"></field>
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="fightMapId" class="int" explain="当前副本id"></field>
+		<list name="fightGoods" class="FightGoods" explain="战斗获得物品"></list>
+		<field name="isSucceed" class="byte" explain="0失败 1成功"></field>
+		<field name="sellMoney" class="int" explain="卖出装备获得银币"></field>
+		<field name="zhengqi" class="int" explain="获得真气"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="202" name="ResOffLineResult" type="SC" explain="离线战斗结果。快速战斗结果">
+		<field name="mapId" class="int" explain="战斗的地图id"></field>
+		<field name="fightTime" class="int" explain="挂机时间"></field>
+		<field name="type" class="byte" explain="战斗结果类型0:离线,1:快速战斗"></field>
+		<field name="fightSumNum" class="short" explain="总次数"></field>
+		<field name="victorNum" class="short" explain="胜利次数"></field>
+		<field name="failureNum" class="short" explain="失败次数次数"></field>
+		<field name="exp" class="int" explain="经验"></field>
+		<field name="money" class="int" explain="银币"></field>
+		<field name="zhenqi" class="int" explain="真气"></field>
+		<field name="sellMoney" class="int" explain="出售获得银币"></field>
+		<list name="fightGoods" class="FightGoods" explain="战斗获得物品"></list>
+		<list name="figtEquip" class="FigtEquip" explain="获得装备统计"></list>
+	</message>
+	
+	<message id="203" name="ResFightStati" type="SC" explain="返回战斗统计信息">
+		<field name="fightNum" class="short" explain="每小时战斗次数"></field>
+		<field name="fightTime" class="byte" explain="平均战斗时长"></field>
+		<field name="victorRate" class="byte" explain="胜率"></field>
+		<field name="equipRate" class="byte" explain="装被掉率"></field>
+		<field name="expHours" class="int" explain="每小时获得经验"></field>
+		<field name="moneyHours" class="int" explain="每小时获得金钱"></field>
+		<field name="zhenqiHours" class="int" explain="每小时获得真气"></field>
+	</message>
+	
+	<message id="204" name="ResMatchingResult" type="SC" explain="返回匹配战斗结果">
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="isSucceed" class="byte" explain="是否成功。0失败。1成功"></field>
+		<field name="type" class="byte" explain="结果类型1匹配战斗，2竞技战斗"></field>
+		<field name="nubmer" class="byte" explain="获得积分"></field>
+		<field name="place" class="int" explain="获得名次"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="205" name="ResShaoDangResult" type="SC" explain="扫荡结果返回">
+		<field name="exp" class="int" explain="经验"></field>
+		<field name="money" class="int" explain="银币"></field>
+		<field name="sellMoney" class="int" explain="出售获得银币"></field>
+		<list name="fightGoods" class="FightGoods" explain="战斗获得物品"></list>
+		<field name="zhenqi" class="int" explain="真气"></field>
+	</message>
+	
+	<message id="206" name="ResAllFightLog" type="SC" explain="战斗日志信息">
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="isVictor" class="byte" explain="是否成功0否1是"></field>
+		<field name="victorName" class="String" explain="类型名称"></field>
+		<field name="chalengerName" class="String" explain="挑战帮会名称"></field>
+		<field name="toChalengerName" class="String" explain="被挑战者名称"></field>
+		<field name="chalengerServerRankId" class="short" explain="挑战者服务器排名Id"></field>
+		<field name="tochalengerServerRankId" class="short" explain="被挑战者服务器排名Id"></field>
+		<field name="chalengerNum" class="short" explain="挑战者人数"></field>
+		<field name="tochalengerNum" class="short" explain="被挑战者人数"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="207" name="ResPlayerFightLog" type="SC" explain="玩家切磋日志">
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="isSucceed" class="byte" explain="0失败 1成功"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="208" name="ResMenPaiFightLog" type="SC" explain="门派竞技日志返回">
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="isSucceed" class="byte" explain="0失败 1成功"></field>
+		<field name="palce" class="int" explain="获得名次"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="209" name="ResYWFightResult" type="SC" explain="返回妖王挑战信息">
+		<field name="fightType" class="byte" explain="战斗类型1。普通。2特殊。3强制"></field>
+		<field name="isSucceed" class="byte" explain="0失败 1成功"></field>
+		<field name="yaoWangTag" class="byte" explain="获得妖王标示.0没有其他妖王标示"></field>
+		<list name="vsInfoLog" class="VsInfoLog" explain="所有对战信息日志"></list>
+	</message>
+	
+	<message id="210" name="ResFightBossRate" type="SC" explain="挑战boss胜率">
+		<field name="putongRate" class="byte" explain="普通胜率"></field>
+		<field name="jingyingRate" class="byte" explain="精英胜率"></field>
+	</message>
+</messages>

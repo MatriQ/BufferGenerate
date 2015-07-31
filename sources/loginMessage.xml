@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.login" id="101">
+	<message id="101" name="ReqLogin" type="CS" explain="请求登陆 " queue="Login">
+		<field name="createServerId" class="int"  explain="登陆服务器id"></field>
+		<field name="username" class="String" explain="用户名"></field>
+		<field name="userpass" class="String" explain="密码"></field>
+	</message>
+	<message id="102" name="ReqHeart" type="CS" explain="心跳请求" queue="Heart">
+		<field name="time" class="int" explain="当前时间（秒）"></field>
+	</message>
+	<message id="103" name="ReqEixtLogin" type="CS" explain="退出并登录" queue="Login">
+	</message>
+	
+	<message id="104" name="ReqUpName" type="CS" explain="修改角色名称" queue="Login">
+		<field name="roleName" class="String" explain="角色名称"></field>
+	</message>
+	
+	<message id="105" name="ReqCreatePlayer" type="CS" explain="创建角色" queue="Login">
+		<field name="playerType" class="int" explain="角色职业类型"></field>
+		<field name="roleName" class="String" explain="角色名称"></field>
+	</message>
+	
+	<message id="106" name="ReqXMWLogin" type="CS" explain="熊猫玩登录" queue="AgentLogin">
+		<field name="authorization_code" class="String" explain="授权码"></field>
+		<field name="type" class="byte" explain="0登录1刷新"></field>
+	</message>
+	
+	<message id="107" name="ReqUCLogin" type="CS" explain="uc登录" queue="AgentLogin">
+		<field name="sid" class="String" explain="uc登录返回sid"></field>
+	</message>
+	
+	<message id="108" name="ReqYJDLLogin" type="CS" explain="易接当乐登录" queue="AgentLogin">
+		<field name="uid" class="String" explain="渠道返回信息唯一标示"></field>
+		<field name="sessid" class="String" explain="sessionId"></field>
+	</message>
+	
+	<message id="109" name="ReqDLLogin" type="CS" explain="当乐登录" queue="AgentLogin">
+		<field name="mid" class="long" explain="用户注册或登录后返回的 mid"></field>
+		<field name="token" class="String" explain="用户注册或登录后返回的 token 参数。"></field>
+	</message>
+	
+	<message id="110" name="ReqPlayerExit" type="CS" explain="请求退出" queue="Login">
+	</message>
+	
+	<message id="111" name="ResHeart" type="SC" explain="心跳请求">
+		<field name="time" class="int" explain="当前时间（秒）"></field>
+	</message>
+	<message id="112" name="ResError" type="SC" explain="登录错误消息">
+		<field name="code" class="int" explain="失败原因 1-服务器未开启 等"></field>
+	</message>
+	<message id="113" name="ResSubstitute" type="SC" explain="被顶下线">
+		<field name="ip" class="String" explain="ip地址"></field>
+	</message>
+	<message id="114" name="ReqAYXLogin" type="CS" explain="爱游戏登录" queue="AgentLogin">
+		<field name="code" class="String" explain="登录授权码"></field>
+	</message>
+	<message id="115" name="ReqOPPOLogin" type="CS" explain="OPPO登录" queue="AgentLogin">
+		<field name="data" class="String" explain="登录数据"></field>
+	</message>
+	<message id="116" name="ReqBaiduLogin" type="CS" explain="百度登录" queue="AgentLogin">
+		<field name="accessToken" class="String" explain="登录令牌"></field>
+	</message>
+	<message id="117" name="ReqXiaoMiLogin" type="CS" explain="小米登录" queue="AgentLogin">
+		<field name="uid" class="String" explain="小米id"></field>
+		<field name="viliSession" class="String" explain="需验证的session"></field>
+	</message>
+	<message id="118" name="ReqSLLLogin" type="CS" explain="360登录" queue="AgentLogin">
+		<field name="accessToken" class="String" explain="用户注册或登录后返回的 token 参数。"></field>
+	</message>
+	<message id="119" name="ReqWDJLogin" type="CS" explain="豌豆荚登录" queue="AgentLogin">
+		<field name="uid" class="String" explain="登录成功返回的uid"></field>
+		<field name="token" class="String" explain="登录成功返回的token"></field>
+	</message>
+	
+	<message id="120" name="ReqYJLogin" type="CS" explain="易接登录" queue="AgentLogin">
+		<field name="type" class="byte" explain="渠道类型"></field>
+		<field name="uin" class="String" explain="用户在渠道上面的编号"></field>
+		<field name="sess" class="String" explain="渠道返回给客户端的SessionId"></field>
+	</message>
+	
+	<message id="121" name="ReqYDLogin" type="CS" explain="云顶登录(IOS)" queue="AgentLogin">
+		<field name="userid" class="int" explain="用户编号"></field>
+		<field name="usertoken" class="String" explain="用户登录令牌"></field>
+	</message>
+	
+	<message id="122" name="ReqPPLogin" type="CS" explain="PP登录(IOS)" queue="AgentLogin">
+		<field name="sid" class="String" explain="sid"></field>
+	</message>
+	
+	<message id="123" name="Req91Login" type="CS" explain="91登录(IOS)" queue="AgentLogin">
+		<field name="uin" class="String" explain="91uin"></field>
+		<field name="sessionId" class="String" explain="渠道返回给客户端的sessionId"></field>
+	</message>
+	
+	<message id="124" name="ReqLJLogin" type="CS" explain="棱镜登录" queue="AgentLogin">
+		<field name="type" class="byte" explain="渠道类型"></field>
+		<field name="channel" class="String" explain="渠道编码"></field>
+		<field name="userId" class="String" explain="用户id"></field>
+		<field name="token" class="String" explain="登录令牌"></field>
+	</message>
+	<message id="125" name="ReqYDAndroidLogin" type="CS" explain="云顶登录(android)" queue="AgentLogin">
+		<field name="userid" class="int" explain="用户编号"></field>
+		<field name="usertoken" class="String" explain="用户登录令牌"></field>
+	</message>
+	<message id="126" name="ReqAZLogin" type="CS" explain="安智登录" queue="AgentLogin">
+		<field name="type" class="byte" explain="渠道类型"></field>
+		<field name="userid" class="String" explain="用户编号"></field>
+	</message>
+	<message id="201" name="ResPPLogin" type="SC" explain="PP返回登录验证(IOS)" queue="AgentLogin">
+		<field name="state" class="byte" explain="0失败、1成功"></field>
+	</message>
+	
+	<message id="202" name="ResServerLv" type="SC" explain="服务器当前等级返回">
+		<field name="serverLv" class="short" explain="服务器当前等级"></field>
+	</message>
+</messages>

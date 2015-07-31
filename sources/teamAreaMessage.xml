@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.teamarea" id="109">
+
+	<bean name="TeamAreaBean" explain="组队竞技信息日志">
+		<field name="playerType" class="byte" explain="角色的职业"></field>
+		<field name="name" class="String" explain="队伍名称"></field>
+		<field name="firstNum" class="int" explain="上周积分"></field>
+		<field name="firstForce" class="int" explain="上周战斗力"></field>
+		<field name="firstPlace" class="int" explain="名次"></field>
+		<field name="money" class="int" explain="上周奖励银币"></field>
+		<field name="shengwang" class="int" explain="上周奖励声望"></field>
+	</bean>
+
+	<message id="101" name="ReqOpenArea" type="CS" explain="打开比武切磋">
+	</message>
+	
+	<message id="102" name="ReqMatching" type="CS" explain="组队匹配战斗">
+	</message>
+	
+	<message id="201" name="ResArea" type="SC" explain="返回比武切磋信息">
+		<field name="number" class="int" explain="当前积分"></field>
+		<field name="force" class="int" explain="当前战斗力"></field>
+		<field name="thisTeamArea" class="TeamAreaBean" explain="组队队伍竞技信息日志"></field>
+		<field name="numOneTeamArea" class="TeamAreaBean" explain="组队天下第一队日志信息"></field>
+	</message>
+	
+</messages>

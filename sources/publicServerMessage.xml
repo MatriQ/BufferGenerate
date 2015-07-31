@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.publicserver" id="204">
+	<bean name="ServerInfo" explain="服务器信息">
+		<field name="serverId" class="int" explain="服务器id"></field>
+		<field name="serverName" class="String" explain="服务器名称"></field>
+		<field name="port" class="int" explain="端口"></field>
+		<field name="ip" class="String" explain="ip"></field>
+	</bean>
+	
+	<bean name="PublicGangInfo" explain="服务器帮派参战信息">
+		<field name="serverId" class="int" explain="服务器id"></field>
+		<field name="gangId" class="long" explain="帮派Id"></field>
+		<field name="gangName" class="String" explain="帮派名字"></field>
+		<field name="gangMasterName" class="String" explain="帮主名字"></field>
+		<field name="jifen" class="int" explain="帮派积分"></field>
+		<field name="gangLv" class="int" explain="帮派等级"></field>
+		<field name="memberMaxLv" class="int" explain="帮派玩家最大等级"></field>
+		<field name="domain" class="byte" explain="帮派分区"></field>
+		<field name="players" class="String" explain="帮派玩家信息"></field>
+	</bean>
+	
+	<message id="101" name="ReqConnGameServer" type="CS" explain="请求连接游戏服务器">
+		<field name="serverInfo" class="ServerInfo" explain="服务器信息"></field>
+	</message>
+	<message id="102" name="ReqPublicFight" type="CS" explain="通知每日帮战开始" queue="publicServer">
+		<field name="time" class="long" explain="公共服时间"></field>
+	</message>
+	<message id="103" name="ReqRemoveGang" type="CS" explain="帮战移除帮会" queue="publicServer">
+		<field name="domain" class="byte" explain="分区Id"></field>
+		<field name="gangId" class="long" explain="帮会Id"></field>
+	</message>
+	<message id="104" name="ReqSendPublicFightResult" type="CS" explain="发送帮战结果" queue="publicServer">
+		<field name="gangId" class="long" explain="帮会Id"></field>
+		<field name="jifen" class="int" explain="积分"></field>
+		<field name="fightlog" class="String" explain="帮战结果"></field>
+	</message>
+	<message id="105" name="ReqSendPublicFightRank" type="CS" explain="发送2周帮战总排行信息" queue="publicServer">
+		<field name="type" class="byte" explain="1当前排行 2总排行"></field>
+		<field name="rankInfo" class="String" explain="总排行信息"></field>
+	</message>
+	<message id="106" name="ReqUpdateServerTime" type="CS" explain="发送公共服时间" queue="publicServer">
+		<field name="time" class="long" explain="公共服时间"></field>
+	</message>
+	<message id="107" name="ReqFightSucceed" type="CS" explain="发送不在线玩家是否成功参与跨服帮战" queue="publicServer">
+		<field name="gangId" class="long" explain="帮派id"></field>
+		<field name="playerId" class="long" explain="玩家id"></field>
+		<field name="type" class="byte" explain="是否成功参与帮战0否1是"></field>
+	</message>
+	
+	
+	<message id="201" name="ResConnGameServer" type="SC" explain="连接公共服状态">
+		<field name="isSuccees" class="byte" explain="0成功1失败"></field>
+	</message>
+	<message id="202" name="ResServerHrad" type="SC" explain="游戏服务器心跳">
+	</message>
+	<message id="203" name="ResGangPlayerInfos" type="SC" explain="发送帮派玩家数据">
+		<field name="num" class="byte" explain="帮战轮数"></field>
+		<list name="publicGangInfoList" class="PublicGangInfo" explain="帮派信息列表"></list>
+	</message>
+</messages>

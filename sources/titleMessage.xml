@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.title" id="113">
+
+	<bean name="TitleBean" explain="称号信息">
+		<field name="sid" class="short" explain="称号资源id"></field>
+	</bean>
+	
+	<message id="101" name="ReqWearTitle" type="CS" explain="佩戴称号 ">
+		<field name="sid" class="short"  explain="称号资源id"></field>
+	</message>
+	
+	<message id="102" name="ReqDischargeTitle" type="CS" explain="卸下称号">
+		<field name="sid" class="short" explain="称号资源id"></field>
+	</message>
+	
+	<message id="201" name="ResTitles" type="SC" explain="返回所有称号">
+		<list name="titles" class="TitleBean" explain="玩家拥有的所有称号"></list>
+	</message>
+	
+	<message id="202" name="ResWearTitle" type="SC" explain="玩家当前穿戴称号">
+		<list name="titles" class="TitleBean" explain="当前穿戴称号资源id"></list>
+	</message>
+		
+	<message id="203" name="ResUpTitle" type="SC" explain="称号更新">
+		<field name="type" class="byte" explain="1:添加，2:删除"></field>
+		<field name="titleBean" class="TitleBean" explain="称号信息"></field>
+	</message>
+	
+	<message id="204" name="ResWearUp" type="SC" explain="穿戴更新">
+		<field name="type" class="byte" explain="1:添加，2:删除"></field>
+		<field name="titleBean" class="TitleBean" explain="称号信息"></field>
+	</message>
+	
+	<message id="205" name="ResOtherWerarTitle" type="SC" explain="它人穿戴称号">
+		<list name="titles" class="TitleBean" explain="当前穿戴称号资源id"></list>
+	</message>
+</messages>

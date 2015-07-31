@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.innerserver" id="201">
+	<bean name="ServerInfo" explain="角色信息">
+		<field name="serverId" class="int" explain="服务器id"></field>
+		<field name="serverName" class="String" explain="服务器名称"></field>
+		<field name="port" class="int" explain="端口"></field>
+		<field name="ip" class="String" explain="ip"></field>
+	</bean>
+	
+	<bean name="NoticeInfo" explain="公告消息">
+		<field name="headline" class="String" explain="公告标题"></field>
+		<field name="content" class="String" explain="公告内容"></field>
+		<field name="createTime" class="String" explain="公告时间"></field>
+	</bean>
+	
+	<bean name="OrderBean" explain="订单信息">
+		<field name="orderId" class="long" explain="订单号"></field>
+		<field name="playerId" class="long" explain="角色id"></field>
+		<field name="serverId" class="int" explain="服务器id"></field>
+		<field name="money" class="int" explain="金额"></field>
+	</bean>
+	
+	<message id="101" name="ReqRegister" type="CS" explain="注册服务器信息">
+		<field name="serverInfo" class="ServerInfo" explain="服务器信息"></field>
+		<list name="noticeInfo" class="NoticeInfo" explain="公告列表"></list>
+	</message>
+	
+	<message id="102" name="ResServerList" type="SC" explain="获取服务器列表">
+		<list name="serverInfo" class="ServerInfo" explain="服务器列表"></list>
+	</message>
+	
+	<message id="103" name="ResNotice" type="SC" explain="返回公告">
+		<list name="noticeInfo" class="NoticeInfo" explain="公告列表"></list>
+	</message>
+	
+	<message id="104" name="ReqNotice" type="CS" explain="请求公共信息">
+	</message>
+	<message id="105" name="ReqEnterThread" type="CS" explain="进入执行线程">
+	</message>
+	<message id="106" name="ReqExitThread" type="CS" explain="退出执行线程">
+	</message>
+	<message id="107" name="ReqServerHrad" type="CS" explain="服务器之间心跳">
+	</message>
+	
+	<message id="108" name="ReqOrderInfo" type="CS" explain="向网关发送一个订单信息">
+		<field name="orderBean" class="OrderBean" explain="订单信息"></field>
+	</message>
+	
+	<message id="201" name="ResPlay" type="SC" explain="充值">
+		<field name="orderId" class="long" explain="订单id"></field>
+		<field name="isSuccees" class="byte" explain="0成功1失败"></field>
+	</message>
+	
+	<message id="202" name="ResCaozuo" type="SC" explain="服务器内部通讯操作">
+		<field name="isSuccees" class="byte" explain="0成功1失败"></field>
+	</message>
+	<message id="203" name="ResServerHrad" type="SC" explain="服务器之间心跳">
+	</message>
+	
+	<message id="204" name="ResFiveStar" type="SC" explain="五星好评成功">
+		<field name="playerId" class="long" explain="玩家id"></field>
+	</message>
+</messages>

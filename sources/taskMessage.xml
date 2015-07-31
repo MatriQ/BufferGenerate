@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.task" id="115">
+	
+	<bean name="TaskBean" explain="任务信息">
+		<field name="sid" class="int" explain="任务资源id"></field>
+		<field name="status" class="byte" explain="任务当前状态0未完成。1已完成"></field>
+	</bean>
+	
+	<message id="101" name="ReqFinish" type="CS" explain="请求领取奖励">
+		<field name="sid" class="int" explain="任务资源id"></field>
+	</message>
+ 	
+	<message id="201" name="ResAllTasks" type="SC" explain="返回所有任务">
+		<list name="allTasks" class="TaskBean" explain="所有任务"></list>
+	</message>
+	
+	<message id="202" name="ResUpTasks" type="SC" explain="更新任务">
+		<field name="type" class="byte" explain="1添加。2删除。3更新"></field>
+		<list name="allTasks" class="TaskBean" explain="所有任务"></list>
+	</message>
+	
+</messages>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.jingmai" id="120">
+	
+	<bean name="JingMaiDetailBean" explain="经脉详细">
+		<field name="jingMaiType" class="byte" explain="1.任脉(力量),2.冲脉(体质),3.带脉(耐力),4.督脉(智力)"></field>
+		<field name="jingMaiLv" class="short" explain="经脉等级"></field>
+		<field name="jingMaiPinJie" class="byte" explain="经脉品阶"></field>
+		<field name="jingMaiFirstZQ" class="int" explain="经脉当前真气"></field>
+		<field name="addValue" class="short" explain="添加属性"></field>
+	</bean>
+	
+	<message id="101" name="ReqInjectZhenQi" type="CS" explain="注入真气">
+		<field name="type" class="byte" explain="1.任脉(力量),2.冲脉(体质),3.带脉(耐力),4.督脉(智力)"></field>
+	</message>
+	
+	<message id="102" name="ReqUpPinJie" type="CS" explain="提示品阶">
+		<field name="jingMailType" class="byte" explain="提示经脉类型:1.任脉(力量),2.冲脉(体质),3.带脉(耐力),4.督脉(智力)"></field>
+		<field name="isUseYuanbao" class="byte" explain="是否使用元宝0不使用 1使用"></field>
+	</message>
+	
+	<message id="103" name="ReqUpDanTian" type="CS" explain="提示丹田">
+	</message>
+	
+	<message id="201" name="ResJingMaiInfo" type="SC" explain="返回经脉信息">
+		<list name="jingMaiDetail" class="JingMaiDetailBean" explain="经脉详细"></list>
+	</message>
+</messages>

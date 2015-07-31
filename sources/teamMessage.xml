@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.team" id="108">
+	<bean name="TeamPlayer" explain="队员简易信息">
+		<field name="playerId" class="long" explain="角色id"></field>
+		<field name="headId" class="int" explain="头像id"></field>
+		<field name="playerName" class="String" explain="角色名称"></field>
+		<field name="level" class="short" explain="等级"></field>
+		<field name="force" class="int" explain="战斗力"></field>
+		<field name="msgs" class="String" explain="留言"></field>
+		<list name="titleIds" class="int" explain="穿戴的称号"></list>
+		<field name="title" class="short" explain="称号"></field>
+		<field name="isBattle" class="byte" explain="是否上阵0否1是"></field>
+		<field name="isOnline" class="byte" explain="是否在线0否1是"></field>
+	</bean>
+	
+	<bean name="InviteTeamInfoBean" explain="求组信息">
+		<field name="playerId" class="long" explain="求组角色id"></field>
+		<field name="playerName" class="String" explain="求组角色名称"></field>
+		<field name="playerLv" class="short" explain="角色等级"></field>
+		<field name="playerType" class="byte" explain="职业"></field>
+		<field name="playerForce" class="int" explain="求组角色战斗力"></field>
+	</bean>
+	
+	<message id="101" name="ReqOpenTeam" type="CS" explain="打开组队界面" queue="execServer">
+	</message>
+	
+	<message id="102" name="ReqMatchingPlayer" type="CS" explain="开始匹配" queue="execServer">
+	</message>
+	
+	<message id="103" name="ReqQuitTeam" type="CS" explain="退出队伍" queue="execServer">
+	</message>
+	
+	<message id="104" name="ReqKickTeam" type="CS" explain="提出队伍" queue="execServer">
+		<field name="playerId" class="long" explain="队员id"></field>
+	</message>
+	
+	<message id="105" name="ReqJoinTeam" type="CS" explain="创建队伍" queue="execServer">
+		<field name="tagPlayer" class="long" explain="创建队伍的目标"></field>
+	</message>
+	
+	<message id="106" name="ReqSetMsg" type="CS" explain="请求组队设置留言">
+		<field name="lymsg" class="String" explain="留言信息"></field>
+	</message>
+	
+	<message id="107" name="ReqInviteTeamInfo" type="CS" explain="打开求组信息" queue="execServer">
+	</message>
+	
+	<message id="108" name="ReqReleaseInvite" type="CS" explain="发布求组信息" queue="execServer">
+	</message>
+	
+	<message id="201" name="ResTeamInfo" type="SC" explain="返回队伍信息">
+		<field name="teamId" class="long" explain="队伍id"></field>
+		<field name="captainId" class="long" explain="队长id"></field>
+		<field name="level" class="byte" explain="队伍等级"></field>
+		<field name="nextLevelTime" class="int" explain="距离下次升级还需多少秒"></field>
+		<list name="teamPlayers" class="TeamPlayer" explain="队伍成员简易信息"></list>
+	</message>
+	
+	<message id="202" name="ResMatchingPlayer" type="SC" explain="返回匹配人物信息">
+		<list name="teamPlayers" class="TeamPlayer" explain="匹配人员简易信息"></list>
+	</message>
+	
+	<message id="203" name="ResInviteTeamInfo" type="SC" explain="返回求组信息">
+		<list name="inviteTeamInfos" class="InviteTeamInfoBean" explain="全服求组信息"></list>
+	</message>
+</messages>

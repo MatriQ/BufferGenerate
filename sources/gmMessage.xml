@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.gm" id="203">
+	<message id="101" name="ReqGMComm" type="CS" explain="发送GM指令">
+		<field name="comm" class="String" explain="gm指令"></field>
+	</message>
+	
+	<message id="102" name="ReqToolGMComm" type="CS" explain="工具发送GM命令" queue="GMTOOL">
+		<field name="comm" class="String" explain="gm指令"></field>
+	</message>
+	
+	<message id="201" name="ResGMmsg" type="SC" explain="处理GM返回">
+		<field name="msg" class="String" explain="操作描述"></field>
+	</message>
+</messages>

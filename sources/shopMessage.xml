@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.shop" id="111">
+	
+	<bean name="SellGoods" explain="出售的物品">
+		<field name="sid" class="byte" explain="物品唯一标示"></field>
+		<field name="goodsId" class="int" explain="出售的物品id"></field>
+		<field name="moneyType" class="byte" explain="出售类型:1元宝。2银币。3荣誉，4声望"></field>
+		<field name="killType" class="byte" explain="折扣"></field>
+		<field name="money" class="int" explain="出售的价格"></field>
+	</bean>
+	
+	<message id="101" name="ReqRefreshGoods" type="CS" explain="刷新物品">
+		<field name="type" class="byte" explain="1.刷新商城物品。2刷新比武切磋兑换物品"></field>
+	</message>
+	
+	<message id="102" name="ReqShopGoods" type="CS" explain="购买物品">
+		<field name="sid" class="byte" explain="物品唯一标示0表示全部购买"></field>
+	</message>
+	
+ 	<message id="103" name="ReqExchangeGoods" type="CS" explain="兑换物品">
+		<field name="sid" class="byte" explain="物品唯一标示"></field>
+	</message>
+	
+	<message id="104" name="ReqExchangeMoney" type="CS" explain="兑换碎银">
+		<field name="type" class="byte" explain="0.全部兑换,1.兑换一次"></field>
+	</message>
+	
+	<message id="105" name="ReqBuyNumber" type="CS" explain="购买次数">	
+		<field name="type" class="byte" explain="购买次数类型：1.剩余挑战boss次数4.剩余团队竞技次数。5。剩余个人竞技次数6.挑战组队副本次数7.门派挑战次数8.矿点挖矿时间"></field>
+	</message>
+	<message id="106" name="ReqGetDollar" type="CS" explain="获取刷新所需元宝">
+	</message>
+	
+	<message id="107" name="ReqBuyLongHun" type="CS" explain="购买龙魂">
+		<field name="sid" class="int" explain="龙魂商店sid"></field>
+	</message>
+	
+	<message id="108" name="ReqBuyVipGift" type="CS" explain="购买vip礼包">
+		<field name="type" class="byte" explain="1.VIP2龙魂礼包,2。VIP3 宝石礼包,3.丹药礼包"></field>
+	</message>
+	
+	<message id="109" name="ReqVipGetSkill" type="CS" explain="领取vip江湖武学">
+		<field name="sid" class="int" explain="江湖武学道具id"></field>
+	</message>
+	<message id="201" name="ResSellGoods" type="SC" explain="返回商城出售的物品">
+		<field name="dollar" class="short" explain="刷新所需元宝"></field>
+		<list name="sellGoods" class="SellGoods" explain="玩家当前所出售的物品"></list>
+	</message>	
+	
+	<message id="202" name="ResExchangeGoods" type="SC" explain="返回当前可兑换的商品">
+		<list name="sellGoods" class="SellGoods" explain="玩家当前所出售的物品"></list>
+	</message>
+	
+	<message id="203" name="ResRefrenseDollar" type="SC" explain="刷新市场所需元宝">
+		<field name="dollar" class="short" explain="刷新所需元宝"></field>
+	</message>
+</messages>

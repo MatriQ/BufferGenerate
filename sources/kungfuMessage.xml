@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.kungfu" id="107">
+
+	<bean name="KungfuInfo" explain="功夫信息">
+		<field name="skillId" class="int" explain="技能id"></field>
+		<field name="proficiency" class="int" explain="熟练度"></field>
+		<field name="type" class="byte" explain="功夫类型1.门派。2江湖"></field>
+	</bean>
+	<bean name="KungfuGrid" explain="功夫格子">
+		<field name="id" class="long" explain="格子id"></field>
+		<field name="skillId" class="int" explain="功夫资源id"></field>
+	</bean>
+	<message id="101" name="ReqOpenKungfuBack" type="CS" explain="打开功夫背包">
+	</message>
+	
+	<message id="102" name="ReqStudyKungfu" type="CS" explain="学习武功">
+		<field name="skillId" class="int" explain="学习的技能id"></field>
+	</message>
+	
+	<message id="103" name="ReqWearKungfu" type="CS" explain="佩戴功夫到格子">
+		<field name="gridId" class="long" explain="格子id"></field>
+		<field name="skillId" class="int" explain="佩戴的技能id"></field>
+		<field name="type" class="byte" explain="佩戴格子类型。1门派。2江湖"></field>
+	</message>
+	
+	<message id="104" name="ReqUpKungfuLv" type="CS" explain="升级功夫">
+		<field name="skillId" class="int" explain="技能id"></field>
+	</message>
+	
+ 	<message id="105" name="ReqDischargeKungfu" type="CS" explain="卸载功夫">
+ 		<field name="gridId" class="long" explain="格子id"></field>
+ 	</message>
+ 	
+ 	<message id="106" name="ReqExerciseKungfu" type="CS" explain="修炼武功">
+ 		<field name="consumeKungfuId" class="int" explain="消耗功夫id"></field>
+ 		<field name="isDollar" class="byte" explain="是否消耗元宝:0不消耗,1消耗"></field>
+ 	</message>
+ 	
+	<message id="201" name="ResKungfuBack" type="SC" explain="返回功夫背包信息">
+		<list name="kungfuInfos" class="KungfuInfo" explain="已学习的所有技能"></list>
+		<list name="mengpaiGrid" class="KungfuGrid" explain="门派格子"></list>
+		<list name="jianghuGrid" class="KungfuGrid" explain="江湖格子"></list>
+	</message>
+	
+	<message id="202" name="ResUpKungfuInfo" type="SC" explain="返回技能信息变化">
+		<field name="kungfuInfo" class="KungfuInfo" explain="变化的技能信息"></field>
+	</message>
+	
+	<message id="203" name="ResUpGrid" type="SC" explain="返回格子变化信息">
+		<field name="type" class="byte" explain="1添加2更新"></field>
+		<field name="gridType" class="byte" explain="1门派2江湖"></field>
+		<field name="kungfuGrid" class="KungfuGrid" explain="格子变化信息"></field>
+	</message>
+	
+	<message id="204" name="ResOtherKungfu" type="SC" explain="返回它人佩戴的功夫">
+		<list name="skillId" class="int" explain="佩戴的技能id"></list>
+	</message>
+	<message id="205" name="ResUpKungfuInfos" type="SC" explain="返回功夫变化集合">
+		<list name="kungfuInfos" class="KungfuInfo" explain="所有的功夫信息"></list>
+	</message>
+</messages>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.buffer" id="122">
+	
+	<bean name="PlayerBufferBean" explain="角色拥有buff">
+		<field name="buffId" class="long" explain="buffer的唯一id"></field>
+		<field name="sid" class="int" explain="bufId配置id"></field>
+		<field name="shengyuTime" class="int" explain="剩余时间(秒)"></field>
+	</bean>
+	
+	<message id="101" name="ReqBuyXiuLianBuffer" type="CS" explain="购买修炼buff">
+		<field name="sid" class="int" explain="修炼buffId"></field>
+	</message>
+	
+	<message id="201" name="ResPlayerBufs" type="SC" explain="返回角色拥有的所有buf">
+		<list name="playerBufferBean" class="PlayerBufferBean" explain="角色拥有buff"></list>
+	</message>
+	
+	<message id="202" name="ResUpBuf" type="SC" explain="更新buf">
+		<field name="type" class="byte" explain="更新类型1.添加,2.删除,3.更新"></field>
+		<list name="playerBufferBean" class="PlayerBufferBean" explain="角色拥有buff"></list>
+	</message>
+</messages>

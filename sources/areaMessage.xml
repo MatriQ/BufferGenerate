@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.area" id="110">
+
+	<bean name="AreaBean" explain="个人竞技信息日志">
+		<field name="playerId" class="long" explain="角色id"></field>
+		<field name="playerType" class="byte" explain="角色的职业"></field>
+		<field name="name" class="String" explain="角色名称"></field>
+		<field name="firstForce" class="int" explain="角色战斗力"></field>
+		<field name="firstPlace" class="int" explain="当前名次"></field>
+	</bean>
+	
+	<bean name="MenPaiBean" explain="门派竞技信息">
+		<field name="playerId" class="long" explain="角色id"></field>
+		<field name="playerName" class="String" explain="角色名称"></field>
+		<field name="playerType" class="byte" explain="职业类型"></field>
+		<field name="playerForce" class="int" explain="战斗力"></field>
+		<field name="playerPlace" class="int" explain="名次"></field>
+	</bean>
+	
+	<bean name="AreaFightLog" explain="战斗记录" >
+		<field name="type" class="byte" explain="1个人.2.门派"></field>
+		<field name="fightLogNum" class="long" explain="日志编号"></field>
+		<field name="toPlayerName" class="String" explain="挑战者名称"></field>
+		<field name="isVictor" class="byte" explain="是否胜利0否1是"></field>
+		<field name="createTime" class="long" explain="时间"></field>
+		<field name="place" class="int" explain="获得名次0标示不变"></field>
+	</bean>
+	<message id="101" name="ReqAreaMatching" type="CS" explain="获取竞技匹配信息">
+	</message>
+	
+	<message id="102" name="ReqFightPlayer" type="CS" explain="请求挑战玩家">
+		<field name="toPlayerId" class="long" explain="挑战的玩家"></field>
+	</message>
+	
+	<message id="103" name="ReqPlayerPersonage" type="CS" explain="玩家切磋">
+		<field name="toPlayerId" class="long" explain="挑战的玩家id"></field>
+	</message>
+	
+	<message id="104" name="ReqMenPaiMatching" type="CS" explain="门派竞技换一批">
+	</message>
+	
+	<message id="105" name="ReqMenPaiFight" type="CS" explain="请求门派战斗">
+		<field name="toPlayerId" class="long" explain="挑战的玩家id"></field>
+	</message>
+	<message id="201" name="ResSoloArea" type="SC" explain="个人竞技信息返回">
+		<field name="place" class="int" explain="个人排名"></field>
+		<field name="areaBean" class="AreaBean" explain="个人天下第一信息"></field>
+	</message>
+	
+	<message id="202" name="ResAreaMatching" type="SC" explain="返回竞技匹配信息">
+		<list name="areaBeans" class="AreaBean" explain="竞技匹配的玩家信息"></list>
+	</message>
+	
+	<message id="203" name="ResOnePlayerUp" type="SC" explain="天下第一变化">
+		<field name="areaBean" class="AreaBean" explain="个人天下第一信息"></field>
+	</message>
+	
+	<message id="204" name="ResMenPaiMatching" type="SC" explain="返回门派匹配信息">
+		<field name="palce" class="int" explain="个人当前排名"></field>
+		<list name="menPaiBeans" class="MenPaiBean" explain="门派匹配玩家的信息"></list>
+	</message>
+	
+	<message id="205" name="ResFirstMenpai" type="SC" explain="门派前三">
+		<list name="menPaiBeans" class="MenPaiBean" explain="门派匹配玩家的信息"></list>
+	</message>
+	
+	<message id="206" name="ResAreaFightLogs" type="SC" explain="返回挑战日志列表">
+		<list name="areaFightLogs" class="AreaFightLog" explain="个人 被挑战日志列表"></list>
+	</message>
+	
+	<message id="207" name="ResUpAreaFightLogs" type="SC" explain="被挑战日志列表变化">
+		<field name="type" class="byte" explain="变化类型1.添加。2删除。3更新"></field>
+		<field name="areaFightLog" class="AreaFightLog" explain="需要更新的日志"></field>
+	</message>
+	
+</messages>

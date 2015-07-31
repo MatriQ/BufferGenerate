@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.msg" id="106">
+	
+	<bean name="MailBean" explain="邮件">
+		<field name="mailId" class="long" explain="邮件id"></field>
+		<field name="title" class="String" explain="标题"></field>
+		<field name="content" class="String" explain="内容"></field>
+		<list name="goodsBean" class="GoodsBean" explain="邮件物品"></list>
+		<field name="isRead" class="byte" explain="是否已读0未读1已读"></field>
+		<field name="createTime" class="String" explain="获得邮件时间"></field>
+	</bean>
+	<bean name="GoodsBean" explain="邮件物品">
+		<field name="goodType" class="byte" explain="物品类型1道具。2装备。3银币。4元宝。5声望。6荣誉，7经验，8帮派贡献9令牌"></field>
+		<field name="goodId" class="int" explain="物品id"></field>
+		<field name="goodNum" class="int" explain="数量"></field>
+	</bean>
+	
+	<message id="101" name="ReqOpenMail" type="CS" explain="打开邮件">
+	</message>
+	
+	<message id="102" name="ReqOperateMail" type="CS" explain="邮件操作">
+		<field name="type" class="byte" explain="1.删除邮件。2提取邮件"></field>
+		<field name="mailId" class="long" explain="邮件id"></field>
+	</message>
+	
+	<message id="103" name="ReqMsgWork" type="CS" explain="发送世界消息" queue="msgServer">
+		<field name="content" class="String" explain="消息内容"></field>
+	</message>
+	
+	<message id="104" name="ReqMsgPlayer" type="CS" explain="发送个人消息" queue="msgServer">
+		<field name="playerId" class="long" explain="玩家id"></field>
+		<field name="content" class="String" explain="消息内容"></field>
+	</message>
+	
+	<message id="105" name="ReqGangMsg" type="CS" explain="发送帮派消息" queue="msgServer">
+		<field name="content" class="String" explain="消息内容"></field>
+	</message>
+	
+	<message id="106" name="ReqTongYong" type="CS" explain="通用消息">
+		<field name="tag" class="byte" explain="通用消息处理标示1.组队留言变为已读"></field>
+	</message>
+	
+	<message id="107" name="ReqMailPlayer" type="CS" explain="给玩家留言">
+		<field name="playerId" class="long" explain="玩家留言id(留言不能是自己)"></field>
+		<field name="msg" class="String" explain="给玩家留言信息"></field>
+	</message>
+	
+	<message id="108" name="ReqOptionMail" type="CS" explain="邮件操作">
+		<field name="option" class="byte" explain="0.一键全部领取,1.一键删除所有已领取"></field>
+	</message>
+	
+	<message id="110" name="ResMsgCode" type="SC" explain="消息提示号">
+		<field name="code" class="int" explain="提示消息号"></field>
+	</message>
+ 	
+	<message id="201" name="ResAttbute" type="SC" explain="属性变化提示消息（返回变化的值）">
+		<field name="type" class="byte" explain="变化的属性类型 见属性对应表"></field>
+		<field name="value" class="int" explain="变化的值"></field>
+	</message>
+
+	<message id="202" name="ResMails" type="SC" explain="返回所有邮件">
+		<list name="mailBeans" class="MailBean" explain="玩家所有邮件"></list>
+	</message>	
+	
+	<message id="203" name="ResReceiveMails" type="SC" explain="邮件变化">
+		<field name="type" class="byte" explain="变化的单个邮件1.添加。2修改。3删除"></field>
+		<list name="mailBeans" class="MailBean" explain="玩家收到邮件"></list>
+	</message>
+	
+	<message id="204" name="ResMsg" type="SC" explain="聊天消息">
+		<field name="playerId" class="long" explain="发送消息的玩家id"></field>
+		<field name="headId" class="int" explain="头像id"></field>
+		<field name="force" class="int" explain="战斗力"></field>
+		<field name="lv" class="short" explain="等级"></field>
+		<field name="msgType" class="byte" explain="消息类型1.个人。2世界。3.帮派"></field>
+		<field name="playerName" class="String" explain="玩家名字"></field>
+		<field name="msgContent" class="String" explain="消息内容"></field>
+		<list name="titleId" class="short" explain="称号id"></list>
+	</message>
+	<message id="205" name="ResSucceed" type="SC" explain="操作成功">
+		<field name="functionTag" class="int" explain="功能标示见（操作成功功能标示表）"></field>
+	</message>
+	<message id="206" name="ResFailure" type="SC" explain="操作失败">
+		<field name="functionTag" class="int" explain="功能标示（操作成功功能标示表）"></field>
+	</message>
+	<message id="207" name="ResMarquee" type="SC" explain="跑马灯消息">
+		<field name="content" class="String" explain="公告内容"></field>
+	</message>
+	<message id="208" name="ResMsgContent" type="SC" explain="消息提示号">
+		<field name="content" class="String" explain="消息内容"></field>
+	</message>
+</messages>

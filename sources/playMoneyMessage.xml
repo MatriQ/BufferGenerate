@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.playmoney" id="117">
+
+	
+	<message id="101" name="ReqPlayMoney" type="CS" explain="请求充值">
+		<field name="sid" class="int" explain="充值金额id"></field>
+	</message>
+	
+	<message id="102" name="ReqPlayYueKa" type="CS" explain="充值月卡">
+	</message>
+	
+	<message id="103" name="ReqAgent" type="CS" explain="发送给平台通知">
+		<field name="myorderId" class="long" explain="我们的订单号"></field>
+	</message> 
+	
+	<message id="104" name="ReqLingQuDollar" type="CS" explain="领取月卡每日奖励">
+	</message>
+	
+	<message id="105" name="ReqPlayGangYueKa" type="CS" explain="充值帮派月卡">
+		<field name="targetPlayerId" class="long" explain="给目标玩家充值的玩家id"></field>
+	</message> 
+	
+	<message id="106" name="ReqPlayYearCard" type="CS" explain="充值年卡">
+	</message>
+	
+	<message id="107" name="ReqCheckApplePay" type="CS" explain="验证苹果正式版充值" queue="iosPlay">
+		<field name="verifyInfo" class="String" explain="验证苹果充值信息"></field>
+	</message>
+	
+	<message id="201" name="ResPlayMoney" type="SC" explain="返回组织订单信息">
+		<field name="serial" class="String" explain="(熊猫返回的消费订单)(oppo回调地址)(360回调地址)(PP回调地址)(91回调地址)"></field>
+		<field name="money" class="int" explain="消费金额"></field>
+		<field name="orderId" class="long" explain="我们的订单号"></field>
+		<field name="playerId" class="long" explain="玩家id"></field>
+		<field name="infos" class="String" explain="扩展信息(熊猫：app_ext1的值),(UC:callbackInfo的值)(当乐:extInfo)(爱游戏:PAY_PARAMS_KEY_CP_PARAMS的值)(oppo:自定义参数)(百度:extInfo的值)(小米：cpUserInfo)(360:APP_EXT_1)(易接:cbi)(91:Note)"></field>
+	</message>
+	
+	<message id="202" name="ResPlaySuccess" type="SC" explain="充值成功返回">
+		<field name="money" class="int" explain="充值成功金额"></field>
+	</message>
+	
+	<message id="203" name="ResPayCardEnabled" type="SC" explain="是否可以充值年卡月卡">
+		<field name="isEnabled" class="byte" explain="是否可以充值年卡月卡(0禁用 1激活)"></field>
+	</message>
+</messages>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.ranking" id="114">
+	<bean name="RankInfo" explain="排行信息">
+		<field name="playerId" class="long" explain="玩家id"></field>
+		<field name="place" class="byte" explain="名次"></field>
+		<field name="lv" class="byte" explain="玩家等级"></field>
+		<field name="playerName" class="String" explain="玩家姓名"></field>
+		<field name="number" class="int" explain="等级||战力||金钱"></field>
+		<field name="playerType" class="byte" explain="所属门派"></field>
+		<field name="isOnline" class="byte" explain="是否在线0否1是"></field>
+	</bean>
+	
+	<message id="101" name="ReqRanking" type="CS" explain="请求排行信息">
+	</message>
+	
+	<message id="201" name="ResRankingInfos" type="SC" explain="发送竞技场信息">
+		<list name="moneyRankings" class="RankInfo" explain="金钱排行"></list>
+		<list name="forceRankings" class="RankInfo" explain="战力排行"></list>
+		<list name="levelRankings" class="RankInfo" explain="等级排行"></list>
+	</message>
+	
+</messages>

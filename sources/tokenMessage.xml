@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.token" id="112">
+	
+	<message id="101" name="ReqWearToken" type="CS" explain="穿戴令牌">
+		<field name="tokenId" class="long" explain="令牌动态id"></field>
+	</message>
+	
+	<message id="102" name="ReqDischargeToken" type="CS" explain="卸载令牌">
+		<field name="tokenId" class="long" explain="令牌动态id"></field>
+	</message>	
+	
+	<message id="103" name="ReqExtract" type="CS" explain="提炼令牌">
+		<field name="tokenId" class="long" explain="令牌动态id"></field>
+		<field name="configType" class="byte" explain="添加属性类型对应人物属性表"></field>
+	</message>
+	
+	<message id="104" name="ReqInjectDragon" type="CS" explain="注入龙魂">
+		<field name="tokenId" class="long" explain="令牌id"></field>
+		<field name="propId" class="int" explain="龙魂道具Id"></field>
+	</message>
+	
+	<message id="201" name="ResDelToken" type="SC" explain="删除令牌">
+		<list name="tokenIds" class="long" explain="令牌动态id"></list>
+	</message>
+</messages>

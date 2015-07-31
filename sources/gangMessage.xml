@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.gang" id="116">
+	<bean name="GangBean" explain="自己的帮会信息">
+		<field name="gangName" class="String" explain="帮会名称"></field>
+		<field name="gangLevel" class="byte" explain="帮会等级"></field>
+		<field name="gangExp" class="int" explain="帮会当前经验"></field>
+		<field name="rubangForce" class="int" explain="入帮所需战力"></field>
+		<field name="zhanqiNum" class="int" explain="战旗数量"></field>
+		<field name="mingmenFightNum" class="byte" explain="名门剩余挑战次数"></field>
+		<field name="mingmenMapSid" class="int" explain="已宣战名门sid，0标示没有"></field>
+		<field name="noticeText" class="String" explain="帮会公告"></field>
+		<list name="members" class="MemberBean" explain="帮会成员"></list>
+	</bean>
+	
+	<bean name="MemberBean" explain="帮会成员">
+		<field name="playerId" class="long" explain="角色id"></field>
+		<field name="gangJob" class="byte" explain="1普通。2长老。3副帮主。4帮主"></field>
+		<field name="playerName" class="String" explain="角色名称"></field>
+		<field name="gongXian" class="int" explain="贡献"></field>
+		<field name="level" class="byte" explain="角色等级"></field>
+		<field name="lostLoginTime" class="int" explain="离线多少分钟"></field>
+		<field name="force" class="int" explain="角色战力"></field>
+		<field name="isOnline" class="byte" explain="是否在线0否1是"></field>
+		<field name="playerType" class="byte" explain="玩家职业类型"></field>
+	</bean>
+	
+	<bean name="GangList" explain="帮会列表信息">
+		<field name="gangId" class="long" explain="帮会id"></field>
+		<field name="gangLevel" class="byte" explain="帮会等级"></field>
+		<field name="gangName" class="String" explain="帮会名称"></field>
+		<field name="gangNum" class="byte" explain="帮会人数"></field>
+	</bean>
+	
+	<bean name="GangRankBean" explain="帮会排行信息">
+		<field name="gangName" class="String" explain="帮会名"></field>
+		<field name="place" class="short" explain="名次"></field>
+		<field name="gangMasterName" class="String" explain="会长名称"></field>
+		<field name="domain" class="byte" explain="战区"></field>
+	</bean>
+	
+	<bean name="GangFightRankBean" explain="帮战排行信息">
+		<field name="gangId" class="long" explain="帮会id"></field>
+		<field name="gangName" class="String" explain="帮会名"></field>
+		<field name="serverRankId" class="short" explain="服务器排名id"></field>
+		<field name="place" class="short" explain="名次"></field>
+		<field name="number" class="short" explain="积分"></field>
+		<field name="domain" class="byte" explain="战区"></field>
+	</bean>
+	
+	<bean name="GangNO1Bean" explain="各个战区第一信息">
+		<field name="gangName" class="String" explain="帮会名字"></field>
+		<field name="serverId" class="short" explain="服务器排名id"></field>
+		<field name="domain" class="byte" explain="战区"></field>
+		<field name="memberNames" class="String" explain="成员名字"></field>
+	</bean>
+	
+	<bean name="GangFightBean" explain="帮派战斗信息">
+		<field name="fightLogId" class="long" explain="战斗录像id"></field>
+		<field name="num" class="byte" explain="第几轮"></field>
+	</bean>
+	
+	<bean name="MingMenMenberBean" explain="参赛名单">
+		<field name="memberName" class="String" explain="成员名称"></field>
+		<field name="memberLv" class="short" explain="成员等级"></field>
+		<field name="memberForce" class="int" explain="成员战斗力"></field>
+		<field name="memberStatus" class="byte" explain="0未报名，1已报名"></field>
+	</bean>
+	
+	<bean name="FightMMLog" explain="名门录像列表">
+		<field name="memberName" class="String" explain="boss名称"></field>
+		<field name="isPlayDay" class="byte" explain="是否今日录像0否1是"></field>
+		<field name="time" class="String" explain="时间"></field>
+		<field name="isVictor" class="byte" explain="0失败1胜利"></field>
+		<field name="fightId" class="long" explain="战斗录像id"></field>
+	</bean>
+	
+	<bean name="MMProp" explain="名门仓库道具">
+		<field name="propId" class="int" explain="道具sid"></field>
+		<field name="propNum" class="int" explain="道具数量"></field>
+		<field name="gongxian" class="int" explain="兑换所需贡献"></field>
+	</bean>
+	
+	<message id="101" name="ReqCreateGang" type="CS" explain="创建帮会" queue="execServer">
+		<field name="gangName" class="String" explain="帮会名称"></field>
+	</message>
+	
+	<message id="102" name="ReqEnterGang" type="CS" explain="加入帮会" queue="execServer">
+		<field name="gangId" class="long" explain="帮会id"></field>
+	</message>
+	
+	<message id="103" name="ReqGangList" type="CS" explain="请求帮会列表" queue="execServer">
+	</message>
+		
+	<message id="104" name="ReqGangByName" type="CS" explain="名称搜索" queue="execServer">
+		<field name="gangName" class="String" explain="名称搜索"></field>
+	</message>
+	
+	<message id="105" name="ReqSetRuBangForce" type="CS" explain="设置入帮条件" queue="execServer">
+		<field name="force" class="int" explain="force"></field>
+	</message>
+	
+	<message id="106" name="ReqExit" type="CS" explain="退出或提出" queue="execServer">
+		<field name="exitPlayerId" class="long" explain="0表示退出，1表示踢出"></field>
+	</message>
+	
+	<message id="107" name="ReqUpJob" type="CS" explain="升职或降职" queue="execServer">
+		<field name="type" class="byte" explain="0升职1降职"></field>
+		<field name="playerId" class="long" explain="升职的角色id"></field>
+	</message>
+	
+	<message id="108" name="ReqGnagBean" type="CS" explain="请求帮会信息" queue="execServer">
+	</message>
+	
+	<message id="109" name="ReqExchangeProp" type="CS" explain="兑换帮会仓库物品" queue="execServer">
+		<field name="sid" class="byte" explain="兑换表sid"></field>
+	</message>
+	
+	<message id="110" name="ReqMySign" type="CS" explain="请求签到" queue="execServer">
+	</message>
+	
+	<message id="111" name="ReqGangRank" type="CS" explain="请求帮会排行" queue="execServer">
+	</message>
+	
+	<message id="112" name="ReqGangFightRank" type="CS" explain="获取帮战排名" queue="execServer">
+		<field name="type" class="byte" explain="获取类型（1本次帮战 2上次帮战）"></field>
+		<field name="domain" class="byte" explain="1-5战区 0表示第一次打开自动选择战区"></field>
+	</message>
+	
+	<message id="113" name="ReqGangFightApply" type="CS" explain="报名帮战" queue="execServer">
+	</message>
+	
+	<message id="114" name="ReqSetNotice" type="CS" explain="设置公告" queue="execServer">
+		<field name="notice" class="String" explain="设置公告"></field>
+	</message>
+	
+	<message id="115" name="ReqExchange" type="CS" explain="捐献战旗" queue="execServer">
+		<field name="num" class="byte" explain="捐献战旗数量"></field>
+	</message>
+	
+	<message id="116" name="ReqDeclareFight" type="CS" explain="名门帮主宣战" queue="execServer">
+		<field name="sid" class="int" explain="宣战关卡id"></field>
+	</message>
+	
+	<message id="117" name="ReqMemberApply" type="CS" explain="名门成员报名" queue="execServer">
+	</message>
+	
+	<message id="118" name="ReqEnterList" type="CS" explain="打开请求参赛名单" queue="execServer">
+	</message>
+	
+	<message id="119" name="ReqFightMMLog" type="CS" explain="请求名门战斗日志" queue="execServer">
+	</message>
+	
+	<message id="120" name="ReqOpenMMWarehouse" type="CS" explain="打开名门仓库" queue="execServer">
+	</message>
+	
+	<message id="121" name="ReqDuiHuanMMProp" type="CS" explain="兑换名门仓库道具" queue="execServer">
+		<field name="propId" class="int" explain="道具id"></field>
+	</message>
+	
+	<message id="122" name="ReqSendGangMail" type="CS" explain="发送帮会邮件" queue="execServer">
+		<field name="msg" class="String" explain="内容"></field>
+	</message>
+	
+	<message id="123" name="ReqSendGangNO1" type="CS" explain="发送天下第一帮" queue="execServer">
+		<field name="domain" class="byte" explain="1-5战区类型 0表示默认自己的战区"></field>
+	</message>
+	
+	<message id="201" name="ResGangInfo" type="SC" explain="返回帮会信息">
+		<field name="myGang" class="GangBean" explain="我的帮会信息成员为0表示没有帮会信息"></field>
+	</message>
+	
+	<message id="202" name="ResGangLists" type="SC" explain="返回帮会列表">
+		<list name="gangLists" class="GangList" explain="帮会列表"></list>
+	</message>
+	
+	<message id="203" name="ResMyMember" type="SC" explain="更新成员信息">
+		<field name="type" class="byte" explain="1添加 3更新"></field>
+		<field name="memberBean" class="MemberBean" explain="更新的成员信息"></field>
+	</message>
+	
+	<message id="204" name="ResDelMember" type="SC" explain="删除成员">
+		<field name="playerId" class="long" explain="删除的成员id"></field>
+	</message>
+	
+	<message id="205" name="ResGangAttbuts" type="SC" explain="帮会属性更新">
+		<field name="attbutType" class="byte" explain="属性类型:1等级2经验3战旗"></field>
+		<field name="value" class="int" explain="属性加减值"></field>
+	</message>
+	
+	<message id="206" name="ResGangRankList" type="SC" explain="返回帮会排名">
+		<list name="gangRankBean" class="GangRankBean" explain="帮会排行信息"></list>
+	</message>
+	
+	<message id="207" name="ResGangFightRank" type="SC" explain="返回帮战排行">
+		<field name="gangId" class="long" explain="自己的帮会id"></field>
+	 	<list name="gangFightRankBean" class="GangFightRankBean" explain="帮会排行"></list>
+	</message>
+	
+	<message id="208" name="ResGangFightInfos" type="SC" explain="返回帮战信息">
+		<field name="myGangJifen" class="short" explain="帮战积分"></field>
+		<field name="isApply" class="byte" explain="成员是否报名,0否1是"></field>
+		<field name="isFirstWeek" class="byte" explain="是否帮战第一周,0否1是"></field>
+		<list name="gangFightBean" class="GangFightBean" explain="战斗信息"></list>
+	</message>
+	
+	<message id="209" name="ResEnterList" type="SC" explain="返回参赛名单">
+		<field name="myIsAppl" class="byte" explain="自己是否已报名0否1是"></field>
+		<list name="memberList" class="MingMenMenberBean" explain="帮派参数人员"></list>
+	</message>
+	
+	<message id="210" name="ResFightMMLog" type="SC" explain="返回名门战斗日志">
+		<list name="fightMMLogs" class="FightMMLog" explain="名门战斗日志信息"></list>
+	</message>
+	
+	<message id="211" name="ResMMWarehouse" type="SC" explain="返回名门仓库">
+		<list name="mMProps" class="MMProp" explain="仓库总的所有道具"></list>
+	</message>
+	
+	<message id="212" name="ResSendGangNO1" type="SC" explain="返回天下第一帮消息">
+		<field name="domain" class="byte" explain="自己帮派所在的战区"></field>
+		<list name="gangNO1Beans" class="GangNO1Bean" explain="战区第一帮列表"></list>
+	</message>
+</messages>

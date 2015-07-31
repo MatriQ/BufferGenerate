@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.equip" id="104">
+	
+	<message id="101" name="ReqWearEquip" type="CS" explain="穿戴装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+	</message>
+	
+	<message id="102" name="ReqDischargeEquip" type="CS" explain="卸载装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+	</message>
+	
+	<message id="103" name="ReqIntensifyEquip" type="CS" explain="强化装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+		<field name="propNum" class="byte" explain="使用幸运符数量"></field>
+	</message>
+	
+	<message id="104" name="ReqXiLian" type="CS" explain="洗练装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+	</message>
+	
+	<message id="105" name="ReqInlay" type="CS" explain="镶嵌宝石">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+		<field name="propId" class="long" explain="宝石动态id"></field>
+	</message>
+	
+	<message id="106" name="ReqInlayDischarge" type="CS" explain="卸载宝石">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+		<field name="propId" class="int" explain="宝石资源id(0.表示全部卸载)"></field>
+	</message>
+	
+	<message id="107" name="ReqSellEquip" type="CS" explain="出售装备">
+		<field name="equipType" class="byte" explain="出售装备类型0全部卖出。 白色1.绿色2.蓝色3.紫色4."></field>
+	</message>
+	
+	<message id="108" name="ReqSmeltEquip" type="CS" explain="熔炼装备">
+		<list name="equipId" class="long" explain="参与熔炼的装备id"></list>
+	</message>
+	
+	<message id="109" name="ReqForgeEquip" type="CS" explain="打造,刷新打造">
+		<field name="forgeOrRefresh" class="byte" explain="0打造，1刷新"></field>
+	</message>
+	
+	<message id="110" name="ReqUpArtifactAttbt" type="CS" explain="点化神器">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+		<field name="propId" class="int" explain="使用道具资源id(道具符)"></field>
+	</message>
+	
+	<message id="111" name="ReqDuanZaoEquip" type="CS" explain="锻造装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+		<field name="scrollId" class="int" explain="消耗卷轴id"></field>
+	</message>
+	
+	<message id="112" name="ReqLockEquip" type="CS" explain="锁定或取消锁定装备">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+	</message>
+	
+	<message id="113" name="ReqInheritSuit" type="CS" explain="继承套装属性">
+		<field name="equipId" class="long" explain="需要被继承的装备id"></field>
+		<field name="toequipId" class="long" explain="继承的装备id"></field>
+	</message>
+	
+	<message id="114" name="ReqCompoundAnJin" type="CS" explain="合成暗金装备">
+		<field name="propId" class="int" explain="矿石id"></field>
+		<field name="local" class="byte" explain="指定部位0-9 0标示不指定（V5以上才能指定）"></field>
+	</message>
+	
+	<message id="115" name="ReqXiLianAnJin" type="CS" explain="洗练暗金装备">
+		<field name="equipId" class="long" explain="装备id"></field>
+		<list name="attType" class="short" explain="属性类型"></list>
+	</message>
+	
+	<message id="116" name="ReqXiLianYesOrNo" type="CS" explain="洗练暗金装备确认">
+		<field name="isOk" class="byte" explain="0不使用新属性1使用新属性"></field>
+	</message>
+	
+	<message id="117" name="ReqInlayAll" type="CS" explain="一键镶嵌宝石">
+		<field name="equipId" class="long" explain="装备动态id"></field>
+	</message>
+	
+	<message id="201" name="ResSmeltEquip" type="SC" explain="熔炼装备显示信息">
+		<list name="newEquipId" class="int" explain="新装备资源id"></list>
+	</message>
+	
+</messages>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.backpack" id="105">
+	
+	<bean name="EquipInfo" explain="背包装备信息">
+		<field name="id" class="long" explain="装备动态id"></field>
+		<field name="resourtId" class="int" explain="装备资源id"></field>
+		<field name="mainType" class="byte" explain="主属性类型。详情见表格"></field>
+		<field name="mainValue" class="int" explain="主属性值"></field>
+		<field name="artifactType" class="byte" explain="神器属性类型：见装备属性表"></field>
+		<field name="artifactValue" class="int" explain="神器属性值"></field>
+		<field name="intensifyLv" class="byte" explain="装备强化等级"></field>
+		<field name="equipNum" class="int" explain="装备评分"></field>
+		<field name="isLock" class="byte" explain="是否锁定状态0否1是"></field>
+		<field name="dianhuaNum" class="int" explain="装备当前点化次数"></field>
+		<field name="taozhuangEffect" class="int" explain="套装效果号(显示时统计相同的效果号：再用效果号本身* 100 + 统计出来的数量)到得到显示效果id"></field>
+		<list name="addAttribute" class="AddAttribute" explain="附加属性"></list>
+		<list name="holes" class="HoleInfo" explain="宝石属性"></list>
+		<list name="anjinAtts" class="AnJinAtt" explain="暗金属性"></list>
+		<list name="kungFuAndEquips" class="KungFuAndEquip" explain="装备组合武功效果"></list>
+	</bean>
+	<bean name="AnJinAtt" explain="暗金属性">
+		<field name="type" class="byte" explain="见属性配置表"></field>
+		<field name="value" class="int" explain="添加值"></field>
+		<field name="isBind" class="byte" explain="是否绑定0否1是"></field>
+	</bean>
+	<bean name="KungFuAndEquip" explain="武功组合装备效果">
+		<field name="effect" class="byte" explain="组合id"></field>
+		<field name="value" class="int" explain="添加的值"></field>
+		<field name="kungfuId" class="int" explain="组合功夫的id"></field>
+	</bean>
+	<bean name="TokenInfo" explain="令牌信息">
+		<field name="tokenId" class="long" explain="令牌动态id"></field>
+		<field name="resourtId" class="int" explain="资源id"></field>
+		<field name="luckNum" class="byte" explain="幸运值"></field>
+		<field name="shenyuNum" class="byte" explain="剩余提炼次数"></field>
+		<list name="dragonSpirit" class="int" explain="龙魂id"></list>
+		<list name="aptitudeInfos" class="AptitudeInfo" explain="添加的属性"></list>
+	</bean>
+	<bean name="HoleInfo" explain="装备孔信息">
+		<field name="propId"  class="int" explain="宝石资源id,0表示没有"></field>
+		<field name="addAttriType"  class="byte" explain="添加属性类型:1.力量。2体质。3智力。4耐力"></field>
+		<field name="addAttriValue"  class="short" explain="添加属性的值"></field>
+	</bean>
+	<bean name="ItemInfo" explain="背包物品信息">
+		<field name="id" class="long" explain="物品动态id"></field>
+		<field name="resourtId" class="int" explain="资源id"></field>
+		<field name="luckNum" class="byte" explain="幸运值"></field>
+		<field name="itemNum" class="int" explain="拥有物品数量"></field>
+	</bean>
+	<bean name="UpEquip" explain="变化的装备">
+		<field name="type" class="byte" explain="变化类型1.添加。2删除。3更新"></field>
+		<field name="equipInfo" class="EquipInfo" explain="变化的装备"></field>
+	</bean>
+	<bean name="UpToken" explain="令牌更新信息">
+		<field name="type" class="byte" explain="变化类型1.添加。3更新"></field>
+		<field name="tokenInfo" class="TokenInfo" explain="更新的令牌"></field>
+	</bean>
+	
+	<bean name="AddAttribute" explain="附加属性">
+		<field name="type" class="byte" explain="附加属性类型:1.力量。2体质。3智力。4耐力"></field>
+		<field name="value" class="int" explain="附加属性值"></field>
+	</bean>
+	
+	<bean name="AptitudeInfo" explain="资质属性">
+		<field name="type" class="byte" explain="附加属性类型  见装备属性类型"></field>
+		<field name="value" class="int" explain="附加属性值"></field>
+	</bean>
+	
+	<message id="101" name="ReqOpenBackpack" type="CS" explain="打开背包">
+	</message>
+	
+	<message id="102" name="ReqUseGoods" type="CS" explain="使用物品">
+		<field name="goodId" class="long" explain="物品id"></field>
+		<field name="isMoney" class="byte" explain="是否使用元宝代替材料。0不使用1.使用 (使用武功残卷0全部使用1使用1次)"></field>
+		<field name="upNumType" class="byte" explain="1.连续升级5次"></field>
+		<field name="content" class="String" explain="使用物品字符串参数"></field>
+		<list name="aptitudeInfo" class="AptitudeInfo" explain="添加资质信息"></list>
+	</message>
+	
+	<message id="103" name="ReqRanAptitude" type="CS" explain="请求随机的资质属性">
+		<field name="goodId" class="long" explain="道具物品id"></field>
+	</message>
+	
+	<message id="104" name="ReqUseAptitude" type="CS" explain="使用属性点">
+		<list name="aptitudeInfo" class="AptitudeInfo" explain="添加资质信息"></list>
+	</message>
+	
+	<message id="105" name="ReqConfirmAddAptitude" type="CS" explain="确定使用随机属性">
+		<field name="propId" class="int" explain="使用随机属性的道具资源id"></field>
+	</message>
+	
+	<message id="106" name="ReqExpansionBack" type="CS" explain="扩充背包">
+	</message>
+	
+	<message id="107" name="ReqSaleProp" type="CS" explain="卖出道具">
+		<field name="propId" class="long" explain="卖出道具id"></field>
+		<field name="num" class="int" explain="卖出道具数量"></field>
+	</message>
+	
+	<message id="108" name="ReqResolveProp" type="CS" explain="分解道具">
+		<field name="propId" class="long" explain="分解的道具id"></field>
+	</message>
+	
+	<message id="109" name="ReqChangeGem" type="CS" explain="切换宝石">
+		<field name="sourceId" class="int" explain="源宝石id"></field>
+		<field name="targetId" class="int" explain="目标宝石Id"></field>
+	</message>
+	
+	<message id="110" name="ResBackpackItem" type="SC" explain="返回背包物品">
+		<field name="backNum" class="int" explain="背包格子上限"></field>
+		<list name="equis" class="EquipInfo" explain="背包装备信息"></list>
+		<list name="items" class="ItemInfo" explain="背包物品信息"></list>
+		<list name="tokens" class="TokenInfo" explain="令牌信息"></list>
+	</message>
+	
+	<message id="201" name="ResPlayerWearEquip" type="SC" explain="返回角色穿戴装备">
+		<list name="equis" class="EquipInfo" explain="穿戴装备信息"></list>
+	</message>
+	
+	<message id="202" name="ResUpEqui" type="SC" explain="更新的装备信息">
+		<field name="type" class="byte" explain="变化类型1.添加。2删除。3更新"></field>
+		<field name="equipInfo" class="EquipInfo" explain="更新过后的装备"></field>
+	</message>
+	
+	<message id="203" name="ResItems" type="SC" explain="返回物品背包所有信息">
+		<list name="items" class="ItemInfo" explain="背包物品信息"></list>
+	</message>
+	
+	<message id="204" name="ResRanAptitude" type="SC" explain="返回随机的资质属性">
+		<list name="ranAttribute" class="AptitudeInfo" explain="随机的资质属性"></list>
+	</message>
+	
+	<message id="205" name="ResEquipInfos" type="SC" explain="返回装备背包信息">
+		<list name="equipInfo" class="EquipInfo" explain="装备背包所有装备"></list>
+	</message>
+	
+	<message id="206" name="ResItemInfo" type="SC" explain="单个物品变化信息">
+		<field name="type" class="byte" explain="变化类型1.添加。2删除。3更新"></field>
+		<field name="itemInfo" class="ItemInfo" explain="单个物品变化信息"></field>
+	</message>
+	
+	<message id="207" name="ResOtherEquip" type="SC" explain="它人装备信息返回">
+		<list name="equis" class="EquipInfo" explain="它人装备信息"></list>
+	</message>
+	
+	<message id="208" name="ResEverydayEquip" type="SC" explain="每日打造装备返回">
+		<field name="equipSid" class="int" explain="可打造装备id"></field>
+		<field name="equipNum" class="int" explain="装备评分"></field>
+		<list name="addAttribute" class="AddAttribute" explain="附加属性"></list>
+	</message>
+	
+	<message id="209" name="ResEquipList" type="SC" explain="多个装备变化">
+		<list name="upEquip" class="UpEquip" explain="变化的装备"></list>
+	</message>
+		
+	<message id="210" name="ResDelGoods" type="SC" explain="删除物品消息">
+		<field name="type" class="byte" explain="删除类型1装备2道具3令牌"></field>
+		<list name="goodId" class="long" explain="物品动态id"></list>
+	</message>
+	
+	<message id="211" name="ResUpToken" type="SC" explain="更新令牌">
+		<list name="upToken" class="UpToken" explain="令牌信息"></list>
+	</message>
+	
+	<message id ="212" name="ResWearToken" type="SC" explain="返回穿戴令牌">
+		<field name="tokenInfo" class="TokenInfo" explain="穿戴令牌信息"></field>
+	</message>
+	
+	<message id ="213" name="ResOtherWearToken" type="SC" explain="返回它人穿戴令牌信息">
+		<field name="tokenInfo" class="TokenInfo" explain="穿戴令牌信息"></field>
+	</message>
+	
+	<message id ="214" name="ResShowAnJEquip" type="SC" explain="返回展示暗金装备">
+		<field name="equipInfo" class="EquipInfo" explain="展示信息"></field>
+	</message>
+	
+	<message id="215" name="ResXiLianAtts" type="SC" explain="洗练获得新暗金属性">
+		<list name="anjinAtts" class="AnJinAtt" explain="洗练后新的暗金属性"></list>
+	</message>
+</messages>

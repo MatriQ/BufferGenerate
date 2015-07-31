@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.mining" id="121">
+	
+	<bean name="MiningBean" explain="矿区">
+		<field name="miningId" class="int" explain="矿区id"></field>
+		<field name="isOpen" class="byte" explain="是否开启0否1是"></field>
+		<list name="yaoWangs" class="YaoWangBean" explain="矿区妖王"></list>
+	</bean>
+	
+	<bean name="YaoWangBean" explain="妖王">
+		<field name="miningId" class="int" explain="妖王id"></field>
+		<field name="isKill" class="byte" explain="是否击杀0否1是"></field>
+		<field name="killPlayerName" class="String" explain="首杀玩家名称"></field>
+	</bean>
+	
+	<bean name="MiningAddress" explain="矿区地点">
+		<field name="addressNum" class="byte" explain="矿点编号"></field>
+		<field name="miningType" class="byte" explain="矿点星级(1-5星)"></field>
+		<field name="toPlayerId" class="long" explain="占领矿点的玩家id"></field>
+		<field name="toPlayerName" class="String" explain="占领矿点的玩家名称"></field>
+	</bean>
+	
+	<bean name="YaoWangRankBean" explain="妖王排行信息">
+		<field name="rankTag" class="byte" explain="排行标示1-7"></field>
+		<field name="playerName" class="String" explain="玩家名称"></field>
+		<field name="playerId" class="long" explain="玩家id"></field>
+	</bean>
+	
+	<message id="101" name="ReqOpenMining" type="CS" explain="打开矿区">
+	</message>
+	
+	<message id="102" name="ReqOpenMiningAddres" type="CS" explain="打开矿区矿点" queue="miningServer">
+		<field name="miningId" class="int" explain="矿区id"></field>
+	</message>
+	
+	<message id="103" name="ReqFightYaoWang" type="CS" explain="挑战妖王" queue="miningServer">
+		<field name="miningId" class="int" explain="矿区id"></field>
+		<field name="yaowangId" class="int" explain="妖王id"></field>
+	</message>
+	
+	<message id="104" name="ReqYaoWangRank" type="CS" explain="请求妖王排行" queue="miningServer">
+	</message>
+	
+	<message id="301" name="ResStartMining" type="CS" explain="玩家矿点操作" queue="miningServer">
+		<field name="miningId" class="int" explain="矿区id"></field>
+		<field name="kuangdianNum" class="int" explain="矿点编号"></field>
+		<field name="type" class="byte" explain="挖矿类型（1.占领无人矿点 2.抢夺别人矿点 3.停止挖矿）"></field>
+	</message>
+	
+	<message id="105" name="ReqMiningAddressTime" type="CS" explain="请求矿点挖矿剩余时间" queue="miningServer">
+		<field name="miningId" class="int" explain="矿区id"></field>
+		<field name="miningAddressId" class="int" explain="矿点id"></field>
+	</message>
+	
+	<message id="201" name="ResMining" type="SC" explain="返回矿区数据">
+		<list name="miningBeans" class="MiningBean" explain="所有矿区"></list>
+	</message>
+	
+	<message id="202" name="ResMiningAddresss" type="SC" explain="返回矿点">
+		<list name="miningAddresss" class="MiningAddress" explain="矿点"></list>
+	</message>
+	
+	<message id="203" name="ResYaoWangRank" type="SC" explain="返回妖王排行">
+		<list name="yaoWangRankBeans" class="YaoWangRankBean" explain="妖王排行信息"></list>
+	</message>
+	
+	<message id="204" name="ResMiningAddressTime" type="SC" explain="返回矿点挖矿剩余时间">
+		<field name="miningId" class="int" explain="矿区id"></field>
+		<field name="miningAddressId" class="int" explain="矿点id"></field>
+		<field name="time" class="int" explain="矿点挖矿剩余时间"></field>
+		<field name="timePlayer" class="int" explain="玩家挖矿剩余时间"></field>
+	</message>
+</messages>

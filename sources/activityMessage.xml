@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages package="com.game.activity" id="118">
+
+	<bean name="Activity" explain="活动信息">
+		<field name="activitId" class="int" explain="活动id"></field>
+	</bean>
+
+	<bean name="ActivitGoods" explain="活动活动物品">
+		<field name="type" class="byte" explain="1.装备,2.道具。3.银两,4.元宝,5.令牌,6.荣誉,7.声望"></field>
+		<field name="modelId" class="int" explain="物品id(装备。道具，令牌才有其他为0)"></field>
+		<field name="num" class="int" explain="数量以及元宝等"></field>
+	</bean>
+
+	<bean name="YaoJiangGoods" explain="摇奖获得物品">
+		<field name="sid" class="int" explain="获得奖励sid(摇奖表)"></field>
+		<field name="propId" class="int" explain="道具id(0标示没有)"></field>
+		<field name="dollar" class="int" explain="获得元宝(0标示没有)"></field>
+		<field name="money" class="int" explain="获得银币(0标示没有)"></field>
+	</bean>
+	
+	<bean name="ActivityGoods" explain="活动出售的物品">
+		<field name="sid" class="int" explain="物品唯一标示"></field>
+		<field name="serverCount" class="int" explain="全服剩余购买次数"></field>
+	</bean>
+
+	<message id="101" name="ReqActivityList" type="CS" explain="请求活动列表">
+	</message>
+
+	<message id="102" name="ReqChouJiang" type="CS" explain="请求抽奖活动">
+		<field name="type" class="byte" explain="0.抽十次。1。抽一次,2.免费抽"></field>
+	</message>
+
+	<message id="103" name="ReqCommitAnswer" type="CS" explain="提交答案">
+		<field name="answer" class="byte" explain="答案"></field>
+	</message>
+
+	<message id="104" name="ReqExchangeGift" type="CS" explain="新年集字兑换物品">
+		<field name="type" class="byte" explain="0新年快乐1.万事如意"></field>
+	</message>
+
+	<message id="105" name="ReqYaoJiang" type="CS" explain="摇奖">
+		<field name="isContinuous" class="byte" explain="是否10连抽0否1是"></field>
+	</message>
+
+	<message id="106" name="ReqQiFuDuiHuan" type="CS" explain="祈福兑换">
+		<field name="propId" class="int" explain="指定兑换的道具"></field>
+	</message>
+
+	<message id="107" name="ReqSevenLoginAward" type="CS" explain="领取7天登录奖励">
+		<field name="sid" class="int" explain="要领取的奖励id"></field>
+		<field name="day" class="int" explain="要领取的第几天的奖励"></field>
+	</message>
+
+	<message id="108" name="ReqOpenActivityShop" type="CS" explain="请求打开活动商店">
+		<field name="type" class="byte" explain="要打开的商店类型(1特惠商城 2暗金商城)"></field>
+	</message>
+	
+	<message id="109" name="ReqBuyActivityGoods" type="CS" explain="请求购买商店物品">
+		<field name="type" class="byte" explain="购买的商店物品(1特惠商城 2暗金商城)"></field>
+		<field name="sid" class="int" explain="购买的商品id"></field>
+	</message>
+
+	<message id="201" name="ResAllActivity" type="SC" explain="返回所有活动">
+		<list name="activitys" class="Activity" explain="活动信息"></list>
+	</message>
+
+	<message id="202" name="ResChouJiangGoods" type="SC" explain="抽奖活动物品">
+		<list name="goods" class="ActivitGoods" explain="活动活动物品"></list>
+	</message>
+
+	<message id="203" name="ResYaoJiangItem" type="SC" explain="摇奖获得物品">
+		<list name="yaoJiangGoods" class="YaoJiangGoods" explain="摇奖获得物品"></list>
+	</message>
+
+	<message id="204" name="ResSevenPayDay" type="SC" explain="更新7天充值天数">
+		<field name="day" class="byte" explain="当前充值天数"></field>
+	</message>
+	
+	<message id="205" name="ResActivityGoods" type="SC" explain="更新活动商店物品">
+		<field name="type" class="byte" explain="更新的商店类型(1特惠商城 2暗金商城)"></field>
+		<list name="activityGoods" class="ActivityGoods" explain="商店物品"></list>
+	</message>
+	
+	<message id="206" name="ResOneActivityGoods" type="SC" explain="更新单个商店物品">
+		<field name="goods" class="ActivityGoods" explain="商店物品"></field>
+	</message>
+</messages>
