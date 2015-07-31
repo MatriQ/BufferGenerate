@@ -11,6 +11,7 @@ import sys
 import os.path
 import traceback
 import argparse  
+import glob
 import  xml.dom.minidom
 
 from time import time
@@ -21,116 +22,160 @@ VERSION = '0.1'
 
 templateFilePattern = re.compile("^\w+\.tmp$")
 
-class ClassInfo:
-    _feilds = []
+targetTmpl=[]
 
-    def __init__(self):
-        pass
+class SourceItem:
+    id=0
+    name=""
+    def __init__(self,id,name):
+        self.id=id
+        self.name=name
+    def toString(self):
+        return "{id:"+self.id+",name:"+self.name+"}"
+
+class PackageInfo:
+    PackageId=0
+    PackageName=""
+    PackageDesc=""
+    def __init__(self,id,name,desc):
+        self.PackageId=id
+        self.PackageName=name
+        self.PackageDesc=desc
+
+
+class ClassInfo:
+    ClassId=0
+    ClassName=""
+    ClassTag=0
+    ClassDesc=""
+    Package=None
+    Feilds = []
+
+    def __init__(self,id,name,desc):
+        self.ClassId=id
+        self.ClassName=name
+        self.ClassDesc=desc
+
+    def setpackage(self,package):
+        self.Package=package
+
+    def getpackage(self):
+        return self.Package
 
     def addfeild(self, _feildinfo):
-        index = len(self._feilds)
+        index = len(self.Feilds)
         _feildinfo.index = index
         if index != 0:
             self.getfeildbyindex(index - 1).IsLastFeild = False
         _feildinfo.IsLastFeild = True
-        self._feilds.append(_feildinfo)
+        self.Feilds.append(_feildinfo)
 
     def getfeildbyindex(self, __index):
-        assert __index <= len(self._feilds)
-        return self._feilds[__index]
+        assert __index <= len(self.Feilds)
+        return self.Feilds[__index]
 
 
 class FeildInfo:
-    _classinfo = ClassInfo()
-
-    def __init__(self, __classinfo):
-        assert isinstance(__classinfo, ClassInfo)
-        self._classinfo = __classinfo
+    FieldName=""
+    FieldType=""
+    FieldDesc=""
+    def __init__(self, name,type,desc):
+        self.FieldName=name
+        self.FieldType=type
+        self.FieldDesc=desc
 
     def getclassinfo(self):
         return self._classinfo
 
 
 # 获取所有模板名
-def getalltemplatefiles(path):
-    result = set()
-    for parent, dirnames, filenames in os.walk(path):
-        for fileName in filenames:
-            m = templateFilePattern.search(fileName)
-            if m:
-                result.add(m.group())
+def getalltemplatefiles(tmpls):
+    result = []
+    for tmpl in tmpls:
+        path=os.path.abspath(tmpl)
+        result.append(path)
     return result
 
+def getFieldsFromSource(classInfo,node):
+    nodes=node.getElementsByTagName("field")
+    for fnode in nodes:  
+        fieldName=fnode.getAttribute("name")
+        fieldType=fnode.getAttribute("class")
+        fieldDesc=fnode.getAttribute("explain")
+        fieldInfo=FeildInfo(fieldName,fieldType,fieldDesc)
+        classInfo.addfeild(fieldInfo)
+        
 
-def gencodefile(filename):
-    """
+def getallclassinfo(source):
+    classes=[]
+    dom=xml.dom.minidom.parse(source)
+    root=dom.documentElement
 
-    :rtype : ClassInfo
-    """
-    path = os.getcwd() + "/templates/" + filename
-    f = open(path)
-    line = f.readline()
-    linenum = 0
-    classinfo = ClassInfo()
-    classinfo.ClassName = filename.split(".")[0]
-    classinfo.Feilds = []
-    while line != '':
-        if not re.compile(r'^(##.+)|([\r\n])$').match(line):
-            line = line.strip("\n")
-            if linenum == 0:
-                classinfo.PackageName = line
-            else:
-                # print(line.split(":"))
-                if len(line.split(":")) > 1:
-                    field = FeildInfo(classinfo)
-                    field.Name = line.split(":")[0]
-                    field.TypeName = line.split(":")[1]
-                    classinfo.Feilds.append(field)
-            linenum += 1
-        line = f.readline()
-    return classinfo
+    #package
+    print("get class info from"+source)
+    id=int(root.getAttribute("id"))
+    name=root.getAttribute("package")
+    packageinfo=PackageInfo(id,name,"")
+
+    #bean
+    nodes=root.getElementsByTagName("bean")
+    for node in nodes:  
+        className=node.getAttribute("name")
+        classDesc=node.getAttribute("explain")
+        classInfo=ClassInfo(0,className,classDesc)
+        classInfo.ClassTag=classTag=-1
+        classInfo.setpackage(packageinfo)
+        classes.append(classInfo)
+        getFieldsFromSource(classInfo,node)
 
 
-##read content of lang
-def getTmplContent(lang):
-    path = os.getcwd() + "/" + lang + ".tmpl"
-    f = open(path)
-    content = f.read()
+    #classes
+    nodes=root.getElementsByTagName("message")
+    for node in nodes:  
+        classId=node.getAttribute("id")
+        className=node.getAttribute("name")
+        classDesc=node.getAttribute("explain")
+        classInfo=ClassInfo(0,className,classDesc)
+        classInfo.ClassTag=0 if node.getAttribute("type")=="CS" else 1
+        classInfo.setpackage(packageinfo)
+        classes.append(classInfo)        
+        getFieldsFromSource(classInfo,node)
+    return classes
+        
+
+def gencodefilebytmpl(classInfo,tmplpath):
+    f=open(tmplpath)
+    tmplContent = f.read()
     f.close()
-    return content
+    #print(tmplContent)
 
-def GeneCode():
-    allTemplates = getalltemplatefiles(".")
+    print("start create class:"+classInfo.Package.PackageName+"."+classInfo.ClassName)
+    tmplContent = re.compile(r"\$PACKAGENAME\$").sub(classInfo.Package.PackageName, tmplContent)
+    tmplContent = re.compile(r"\$CLASSNAME\$").sub(classInfo.ClassName, tmplContent)
+    forcontents = re.findall(r'(<\s*for\s+(\$\w+?\$)\s+:\s+(\$\w+?\$)\s*>(.*?)</\s*for\s*>)', tmplContent, re.S)
 
-    for filename in allTemplates:
-        # dir(f)
-        classinfo = gencodefile(filename)
-        # print(tmp)
-        content = getTmplContent("cpp")
-        content = re.compile(r"\$PACKAGENAME\$").sub(classinfo.PackageName, content)
-        content = re.compile(r"\$CLASSNAME\$").sub(classinfo.ClassName, content)
-        forcontents = re.findall(r'(<\s*for\s+(\$\w+?\$)\s+:\s+(\$\w+?\$)\s*>(.*?)</\s*for\s*>)', content, re.S)
+    if forcontents:
+        # print(forcontents[0])
+        for forcontent in forcontents:
+            var = forcontent[1]
+            col = forcontent[2]
+            subcontent = forcontent[3].rstrip("\n")
 
-        if forcontents:
-            # print(forcontents[0])
-            for forcontent in forcontents:
-                var = forcontent[1]
-                col = forcontent[2]
-                subcontent = forcontent[3].rstrip("\n")
+            newContent = ""
+            if col == "$Fields$":
+                for filed in classInfo.Feilds:
+                    #print("create field:"+classInfo.Package.PackageName+"."+classInfo.ClassName+"."+filed.FieldName)
+                    str = subcontent.replace("$PACKAGENAME$", classInfo.Package.PackageName)
+                    # print(str.strip("\n"))
+                    str = str.replace("$CLASSNAME$", classInfo.Package.PackageName)
+                    str = str.replace(var + ".$FieldsName$", filed.FieldName)
+                    str = str.replace(var + ".$FieldsType$", filed.FieldType)
+                    newContent += str
+            tmplContent = tmplContent.replace(forcontent[0], newContent)
+    #print(tmplContent)
+    print("create class:"+classInfo.Package.PackageName+"."+classInfo.ClassName)
+    return tmplContent
 
-                newContent = ""
-                if col == "$Fields$":
-                    for filed in classinfo.Feilds:
-                        str = subcontent.replace("$PACKAGENAME$", classinfo.PackageName)
-                        # print(str.strip("\n"))
-                        str = str.replace("$CLASSNAME$", classinfo.PackageName)
-                        str = str.replace(var + ".$FieldsName$", filed.Name)
-                        str = str.replace(var + ".$FieldsType$", filed.TypeName)
-                        newContent += str
-                content = content.replace(forcontent[0], newContent)
-
-        print(content)
-        print("....................")
 
 def _check_python_version():
     major_ver = sys.version_info[0]
@@ -165,6 +210,25 @@ def help():
     #print("\t%s new --help" % sys.argv[0])
     #print("\t%s run --help" % sys.argv[0])
 
+def readSourceItems(source,reg):
+    path=os.path.abspath(source)
+    dom=xml.dom.minidom.parse(path)
+    root=dom.documentElement
+    nodes=root.getElementsByTagName("message")
+
+    items=[]
+    for node in nodes:
+        id=node.getAttribute("id")
+        name=node.getAttribute("name")
+        if reg!="":
+            p=re.compile(reg)
+            if not p.match(name):
+                continue
+        item=SourceItem(id,name)
+        items.append(item)
+    return items
+
+
 
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
@@ -188,10 +252,6 @@ def main():
         if len(argvs)==0:
             print ("Args cannot empty")
             return
-        #args 1:xml source
-        #args 2: tmpl files,  xx[,xx...]
-        #args [-r  xx]:regex for name
-        #args [-d  xx]:target dir
 
         parser = argparse.ArgumentParser(description="This is a description of %(prog)s", 
             epilog="This is a epilog of %(prog)s", 
@@ -200,7 +260,7 @@ def main():
             formatter_class=argparse.ArgumentDefaultsHelpFormatter)  
 
         parser.add_argument("source", 
-                            help="xml source",
+                            help="xml source dir",
                             nargs="+")
 
         parser.add_argument("-t","-tmpl",
@@ -219,16 +279,46 @@ def main():
                             help="target dir") 
         args = parser.parse_args(argvs) 
 
-        for s in args.source:
-            print s
+        targetTmpl=getalltemplatefiles(args.template)
         
+        #get source pathes
+        pathes=[]
+        for s in args.source:    
+            sourcepath=os.path.abspath(s)
+            if not os.path.exists(sourcepath):
+                print("source path:"+sourcepath+" is not exists")
+                continue
+            elif os.path.isdir(sourcepath): 
+                    #dir
+                    p=re.compile(".+\\.xml")
+                    for f in glob.glob( sourcepath + os.sep + '*.xml' ):
+                        if not os.path.isdir(f):
+                            pathes.append(f)
+            else:
+                pathes.append(sourcepath)
+
+        classes=[]
+        for path in pathes:
+            classes.extend(getallclassinfo(path))
+
+        for classInfo in classes:
+            for tmpl in targetTmpl:
+                content=gencodefilebytmpl(classInfo,tmpl)
+                targetDir=tmpl.replace(".tmpl","")
+                if not os.path.exists(targetDir):
+                    os.mkdir(targetDir)
+                path=os.path.join(targetDir,classInfo.ClassName)
+                f=open(path,"w+")
+                f.write(content)
+                f.close()
 
     except Exception, e:
-        print e
-    else:
-        pass
-    finally:
-        pass
+        traceback.print_exc()
+        #raise e
+    #else:
+    #    pass
+    #finally:
+    #    pass
    
 # -------------- main --------------
 if __name__ == '__main__':
