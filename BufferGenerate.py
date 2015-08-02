@@ -24,17 +24,12 @@ templateFilePattern = re.compile("^\w+\.tmp$")
 targetTmpl = []
 
 
-class SourceItem:
-    id = 0
-    name = ""
-
-    def __init__(self, id, name):
-        self.id = id
-        self.name = name
-
-    def toString(self):
-        return "{id:" + self.id + ",name:" + self.name + "}"
-
+class TaretFile:
+    fileName=""
+    fileContent=""
+    def __init__(self, filename, filecontent):
+        self.fileName = filename
+        self.fileContent = filecontent
 
 class PackageInfo:
     packageId = 0
@@ -113,7 +108,6 @@ def getFieldsFromSource(classInfo, node):
         classInfo.addFeild(fieldInfo)
         print("add field:"+fieldName+"to "+classInfo.className+" fields count:"+str(len(classInfo.feilds)))
 
-
 def getAllClassInfo(source):
     classes = []
     dom = xml.dom.minidom.parse(source)
@@ -151,6 +145,8 @@ def getAllClassInfo(source):
     return classes
 
 def replaceKeyWords(src,classInfo):
+    if classInfo==None:
+        raise Exception("args classInfo is None")
     src = re.compile(r"\$PACKAGENAME\$").sub(classInfo.package.packageName, src)
     src = re.compile(r"\$CLASSNAME\$").sub(classInfo.className, src)
     forcontents = re.findall(r'(<\s*for\s+(\$\w+?\$)\s+:\s+(\$\w+?\$)\s*>(.*?)</\s*for\s*>)', src, re.S)
@@ -175,22 +171,26 @@ def replaceKeyWords(src,classInfo):
     return src
 
 def gencodefilebytmpl(classInfo, tmplpath):
-    filename=""
+    targetFiles=[]
     f = open(tmplpath)
-
-    str=f.readline()
-    str=replaceKeyWords(str,classInfo)
-    if str.find("#filename:"):
-        print(str)
-        #filename=str.split(":")[1]
-        print "filename:"+filename
-
-    tmplContent = f.read()
-    tmplContent=replaceKeyWords(tmplContent,classInfo)
+    content=f.read()
     f.close()
+    if content.find("#filestart")==-1:
+        raise ValueError("Template file:"+tmplpath+" not include #filestart")
 
-    return tmplContent,filename
-
+    r=re.compile("#filestart:.+?(?=#fileend)",re.S)
+    results=r.findall(content)
+    for result in results:
+        match=re.compile("(?<=#filestart:).+?(?=\n)",re.S)
+        filename=match.search(result).group()
+        match=re.compile("(?<=\n).+",re.S).search(result)
+        filecontent=""
+        if match!=None:
+            filecontent=match.group()
+        filename=replaceKeyWords(filename,classInfo)
+        filecontent=replaceKeyWords(filecontent,classInfo)
+        targetFiles.append(TaretFile(filename,filecontent))
+    return targetFiles
 
 def _check_python_version():
     major_ver = sys.version_info[0]
@@ -226,26 +226,6 @@ def help():
     # print("\nExample:")
     # print("\t%s new --help" % sys.argv[0])
     # print("\t%s run --help" % sys.argv[0])
-
-
-def readSourceItems(source, reg):
-    path = os.path.abspath(source)
-    dom = xml.dom.minidom.parse(path)
-    root = dom.documentElement
-    nodes = root.getElementsByTagName("message")
-
-    items = []
-    for node in nodes:
-        id = node.getAttribute("id")
-        name = node.getAttribute("name")
-        if reg != "":
-            p = re.compile(reg)
-            if not p.match(name):
-                continue
-        item = SourceItem(id, name)
-        items.append(item)
-    return items
-
 
 def main():
     workpath = os.path.dirname(os.path.realpath(__file__))
@@ -320,18 +300,19 @@ def main():
 
         for classInfo in classes:
             for tmpl in targetTmpl:
-                content = gencodefilebytmpl(classInfo, tmpl)
+                targetFiles = gencodefilebytmpl(classInfo, tmpl)
                 targetDir = os.path.join(os.path.abspath(args.targetdir),os.path.splitext(os.path.basename(tmpl))[0])
                 if not os.path.exists(os.path.dirname(targetDir)):
                     os.mkdir(os.path.dirname(targetDir))
                 if not os.path.exists(targetDir):
                     print "mkdir:"+targetDir
                     os.mkdir(targetDir)
-                path = os.path.join(targetDir, classInfo.className)
-                print(path)
-                f = open(path, "w+")
-                f.write(content)
-                f.close()
+                for targetFile in targetFiles:
+                    path = os.path.join(targetDir, targetFile.fileName)
+                    f = open(path, "w+")
+                    f.write(targetFile.fileContent)
+                    print("write file:"+targetFile.fileName)
+                    f.close()
 
     except Exception, e:
         traceback.print_exc()
