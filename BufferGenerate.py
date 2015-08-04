@@ -13,6 +13,8 @@ import traceback
 import argparse
 import glob
 import xml.dom.minidom
+import airspeed
+
 
 from time import time
 from optparse import OptionParser
@@ -48,13 +50,14 @@ class ClassInfo:
     classTag = 0
     classDesc = ""
     package = None
-    feilds = []
+    isBean=False
+    fields = []
 
     def __init__(self, id, name, desc):
         self.classId = id
         self.className = name
         self.classDesc = desc
-        self.feilds=[]
+        self.fields=[]
 
     def setPackage(self, package):
         self.package = package
@@ -62,23 +65,24 @@ class ClassInfo:
     def getPackage(self):
         return self.package
 
-    def addFeild(self, _feildinfo):
-        index = len(self.feilds)
-        _feildinfo.index = index
+    def addField(self, _Fieldinfo):
+        index = len(self.fields)
+        _Fieldinfo.index = index
         if index != 0:
-            self.getFeildByIndex(index - 1).IsLastFeild = False
-        _feildinfo.IsLastFeild = True
-        self.feilds.append(_feildinfo)
+            self.getFieldByIndex(index - 1).isLastField = False
+        _Fieldinfo.isLastField = True
+        self.fields.append(_Fieldinfo)
 
-    def getFeildByIndex(self, __index):
-        assert __index <= len(self.feilds)
-        return self.feilds[__index]
+    def getFieldByIndex(self, __index):
+        assert __index <= len(self.fields)
+        return self.fields[__index]
 
 
-class FeildInfo:
+class FieldInfo:
     fieldName = ""
     fieldType = ""
     fieldDesc = ""
+    isSimpleType=True
 
     def __init__(self, name, type, desc):
         self.fieldName = name
@@ -99,14 +103,18 @@ def getalltemplatefiles(tmpls):
 
 
 def getFieldsFromSource(classInfo, node):
-    nodes = node.getElementsByTagName("field")
-    for fnode in nodes:
-        fieldName = fnode.getAttribute("name")
-        fieldType = fnode.getAttribute("class")
-        fieldDesc = fnode.getAttribute("explain")
-        fieldInfo = FeildInfo(fieldName, fieldType, fieldDesc)
-        classInfo.addFeild(fieldInfo)
-        print("add field:"+fieldName+"to "+classInfo.className+" fields count:"+str(len(classInfo.feilds)))
+    for fnode in node.childNodes:
+    #nodes = node.getElementsByTagName("field")
+    #for fnode in nodes:
+        if fnode.nodeName=="field" or fnode.nodeName=="list":
+            fieldName = fnode.getAttribute("name")
+            fieldDesc = fnode.getAttribute("explain")
+            fieldType = fnode.getAttribute("class")
+            fieldInfo = FieldInfo(fieldName, fieldType, fieldDesc)
+            if fnode.nodeName=="list":
+                fieldInfo.isList=True
+            classInfo.addField(fieldInfo)
+            print("add field:"+fieldName+" to "+classInfo.className+" fields count:"+str(len(classInfo.fields)))
 
 def getAllClassInfo(source):
     classes = []
@@ -114,7 +122,7 @@ def getAllClassInfo(source):
     root = dom.documentElement
 
     # package
-    print("get class info from" + source)
+    #print("get class info from" + source)
     id = int(root.getAttribute("id"))
     name = root.getAttribute("package")
     packageinfo = PackageInfo(id, name, "")
@@ -126,6 +134,7 @@ def getAllClassInfo(source):
         classDesc = node.getAttribute("explain")
         classInfo = ClassInfo(0, className, classDesc)
         classInfo.ClassTag = classTag = -1
+        classInfo.isBean=True
         classInfo.setPackage(packageinfo)
         classes.append(classInfo)
         getFieldsFromSource(classInfo, node)
@@ -137,40 +146,15 @@ def getAllClassInfo(source):
         classId = node.getAttribute("id")
         className = node.getAttribute("name")
         classDesc = node.getAttribute("explain")
-        classInfo = ClassInfo(0, className, classDesc)
+        classInfo = ClassInfo(classId, className, classDesc)
         classInfo.ClassTag = 0 if node.getAttribute("type") == "CS" else 1
         classInfo.setPackage(packageinfo)
         classes.append(classInfo)
         getFieldsFromSource(classInfo, node)
     return classes
 
-def replaceKeyWords(src,classInfo):
-    if classInfo==None:
-        raise Exception("args classInfo is None")
-    src = re.compile(r"\$PACKAGENAME\$").sub(classInfo.package.packageName, src)
-    src = re.compile(r"\$CLASSNAME\$").sub(classInfo.className, src)
-    forcontents = re.findall(r'(<\s*for\s+(\$\w+?\$)\s+:\s+(\$\w+?\$)\s*>(.*?)</\s*for\s*>)', src, re.S)
-
-    if forcontents:
-        for forcontent in forcontents:
-            var = forcontent[1]
-            col = forcontent[2]
-            subcontent = forcontent[3].rstrip("\n")
-
-            newContent = ""
-            if col == "$Fields$":
-                for filed in classInfo.feilds:
-                    # print("create field:"+classInfo.Package.PackageName+"."+classInfo.ClassName+"."+filed.fieldName)
-                    str = subcontent.replace("$PACKAGENAME$", classInfo.package.packageName)
-                    # print(str.strip("\n"))
-                    str = str.replace("$CLASSNAME$", classInfo.package.packageName)
-                    str = str.replace(var + ".$FieldsName$", filed.fieldName)
-                    str = str.replace(var + ".$FieldsType$", filed.fieldType)
-                    newContent += str
-            src = src.replace(forcontent[0], newContent)
-    return src
-
 def gencodefilebytmpl(classInfo, tmplpath):
+    fields=classInfo.fields
     targetFiles=[]
     f = open(tmplpath)
     content=f.read()
@@ -181,14 +165,23 @@ def gencodefilebytmpl(classInfo, tmplpath):
     r=re.compile("#filestart:.+?(?=#fileend)",re.S)
     results=r.findall(content)
     for result in results:
+        #print "result:"+result
         match=re.compile("(?<=#filestart:).+?(?=\n)",re.S)
-        filename=match.search(result).group()
+        #print(match.search(result).group())
+        t=airspeed.Template(match.search(result).group())
+        filename=""
+        if t!=None:
+            filename=t.merge(locals())
         match=re.compile("(?<=\n).+",re.S).search(result)
         filecontent=""
         if match!=None:
             filecontent=match.group()
-        filename=replaceKeyWords(filename,classInfo)
-        filecontent=replaceKeyWords(filecontent,classInfo)
+        t=airspeed.Template(filecontent)
+        filecontent=t.merge(locals())
+
+        filename=re.sub(r"(?<=[^\\])\\0","",filename)
+        filecontent=re.sub(r"(?<=[^\\])\\0","",filecontent)
+
         targetFiles.append(TaretFile(filename,filecontent))
     return targetFiles
 
@@ -228,6 +221,8 @@ def help():
     # print("\t%s run --help" % sys.argv[0])
 
 def main():
+
+    #print dir(airspeed)
     workpath = os.path.dirname(os.path.realpath(__file__))
 
     if not _check_python_version():
