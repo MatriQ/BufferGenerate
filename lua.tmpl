@@ -1,15 +1,48 @@
-#filestart:
-package $PACKAGENAME$
+#filestart:$classInfo.className#if(not $classInfo.isBean)Message#end.lua
+require("app.Commnucation.Message")
+#foreach($field in $fields)
+#if($field.fieldType!="bool" and $field.fieldType!="byte" and $field.fieldType!="char" and 
+	$field.fieldType!="short" and $field.fieldType!="int" and $field.fieldType!="float" and 
+	$field.fieldType!="double" and $field.fieldType!="long" and $field.fieldType!="String"   )
+require('app.Messages.$field.fieldType')
+#end
+#end
 
-var $CLASSNAME$ struct {
-<for $item$ : $Fields$>	
-	$item$.$FieldsName$ $item$.$FieldsType$
-</for>
-}
+local $classInfo.className#if(not $classInfo.isBean)Message#end = {
+_ID = $classInfo.package.packageId$classInfo.classId
+__defines = {
+#foreach ( $field in $fields)#if($field.fieldType=="bool")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeBool}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="byte")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeByte}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="char")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeChar}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="short")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeShort}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="int")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeInt}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="float")	
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeFloat}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="double")	
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeDouble}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="long")
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeLong}#if(not $field.isLastField),
+#end
+#elseif($field.fieldType=="String")	
+				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeString}#if(not $field.isLastField),
+#end
+#else 				
+				{ "$field.fieldName",#if($field.isList)TypeArray,#else TypeRef,#end msg.$field.fieldType }#if(not $field.isLastField),#end
+#end
+#end
 
-<for $item$ : $Fields$>	
-func (_$CLASSNAME$ *$CLASSNAME$) Get$item$.$FieldsName$() $item$.$FieldsType$ {
-	return _$CLASSNAME$.$item$.$FieldsName$()
-}
-</for>
+			}
+return $classInfo.className#if(not $classInfo.isBean)Message#end
 #fileend
