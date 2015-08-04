@@ -1,16 +1,16 @@
-#filestart:$CLASSNAME$.go
+#filestart:$classInfo.className#if(not $classInfo.isBean)Message#end.go
 package $PACKAGENAME$
 
-var $CLASSNAME$ struct {
-<for $item$ : $Fields$>	
-	$item$.$FieldsName$ $item$.$FieldsType$
-</for>
+var $classInfo.className#if(not $classInfo.isBean)Message#end struct {
+#foreach($field in #fields)	
+	$field.fieldName $field.fieldType
+#end
 }
 
-<for $item$ : $Fields$>	
-func (_$CLASSNAME$ *$CLASSNAME$) Get$item$.$FieldsName$() $item$.$FieldsType$ {
-	return _$CLASSNAME$.$item$.$FieldsName$()
+#foreach($field in $fields)	
+func (_$classInfo.className#if(not $classInfo.isBean)Message#end *$classInfo.className#if(not $classInfo.isBean)Message#end) Get$field.fieldName\0() $field.fieldType {
+	return _$classInfo.className#if(not $classInfo.isBean)Message#end.$field.fieldName\0()
 }
-</for>
+#end
 
 #fileend

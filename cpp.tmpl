@@ -1,38 +1,34 @@
-#filestart:$CLASSNAME$.h
-namespace $PACKAGENAME$
+#filestart:$classInfo.className#if(not $classInfo.isBean)Message#end.h
+class $classInfo.className\0#if(not $classInfo.isBean)Message#end
 {
-	class $CLASSNAME$
-	{
-		public:
-			$CLASSNAME$(){};
-			~$CLASSNAME$(){};
-			void Reset()
-			{
+	public:
+		$classInfo.className#if(not $classInfo.isBean)Message#end(){};
+		~$classInfo.className#if(not $classInfo.isBean)Message#end(){};
+		void Reset()
+		{
 
-			};
-			$CLASSNAME$* Clone()
-			{
+		};
+		$classInfo.className#if(not $classInfo.isBean)Message#end* Clone()
+		{
 
-			}
-		private:
-			<for $item$ : $Fields$>	
-			$item$.$FieldsType$ _$item$.$FieldsName$;
-			</for>
-		public:
-			<for $item$ : $Fields$>	
-			$item$.$FieldsType$ Get$item$.$FieldsName$()
-			{
-				return _$item$.$FieldsName$;
-			}
-			void Set$item$.$FieldsName$($item$.$FieldsType$ ___$item$.$FieldsName$)
-			{
-				_$item$.$FieldsName$=___$item$.$FieldsName$;
-			}
-			</for>
-	}
+		};
+	private:
+#foreach($field  in $fields)
+		$field.fieldType _$field.fieldName;
+#end
+	public:
+#foreach($field  in $fields)
+		$field.fieldType Get$field.fieldName\0()
+		{
+			return _$field.fieldName;
+		};
+		void Set$field.fieldName\0($field.fieldType ___$field.fieldName)
+		{
+			_$field.fieldName=___$field.fieldName;
+		};
+#end
 }
 #fileend
-
-#filestart:$CLASSNAME$.cpp
-#include "$CLASSNAME$.h"
+#filestart:$classInfo.className#if(not $classInfo.isBean)Message#end.cpp
+\#include "$classInfo.className#if(not $classInfo.isBean)Message#end.h"
 #fileend
