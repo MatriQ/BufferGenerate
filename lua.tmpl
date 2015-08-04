@@ -7,9 +7,16 @@ require("app.Commnucation.Message")
 require('app.Messages.$field.fieldType')
 #end
 #end
+#if($classInfo.isBean or $classInfo.className[2]=='s')
+local msg=MSG or {}
 
-local $classInfo.className#if(not $classInfo.isBean)Message#end = {
-_ID = $classInfo.package.packageId$classInfo.classId
+msg.$classInfo.className#if(not $classInfo.isBean)Message#end = {
+#else
+local $classInfo.className\0Message = {
+#end
+#if(not $classInfo.isBean)
+_ID = $classInfo.package.packageId$classInfo.classId,
+#end
 __defines = {
 #foreach ( $field in $fields)#if($field.fieldType=="bool")
 				{ "$field.fieldName",#if($field.isList)TypeArray,#end TypeBool}#if(not $field.isLastField),
@@ -44,5 +51,10 @@ __defines = {
 #end
 
 			}
+	}
+#if($classInfo.isBean or $classInfo.className[2]=='s')
+cc.exports.MSG=msg
+#else
 return $classInfo.className#if(not $classInfo.isBean)Message#end
+#end
 #fileend
