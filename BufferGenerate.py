@@ -196,29 +196,21 @@ def _check_python_version():
 
 
 def help():
-    print("\n%s %s - BufferGenerate console: A command line tool for generate message code" %
+    print("\n%s %s \n A command line tool for generate message code" %
           (sys.argv[0], VERSION))
-    print("\nAvailable commands:")
-    # parse = Cocos2dIniParser()
-    # classes = parse.parse_plugins()
-    '''max_name = max(len(classes[key].plugin_name(
-    ) + classes[key].plugin_category()) for key in classes.keys())
-    max_name += 4
-    for key in classes.keys():
-        plugin_class = classes[key]
-        category = plugin_class.plugin_category()
-        category = (category + ' ') if len(category) > 0 else ''
-        name = plugin_class.plugin_name()
-        print("\t%s%s%s%s" % (category, name,
-                              ' ' * (max_name - len(name + category)),
-                              plugin_class.brief_description()))
-    '''
+    #print("\nAvailable commands:")
     print("\nAvailable arguments:")
     print("\t-h, --help\tShow this help information")
     print("\t-v, --version\tShow the version of this command tool")
-    # print("\nExample:")
-    # print("\t%s new --help" % sys.argv[0])
-    # print("\t%s run --help" % sys.argv[0])
+    print("\t")
+    print("\tsource \tA dir of xml files,or some xml files")
+    print("\t-t, --tmpl\tSome template files")
+    print("\t-r, --regex\tA regex of file filter")
+    print("\t-d, --dir\tThe target output folder,default is src")
+
+    print("Example:")
+    print("\tpython BufferGenerate.py Message.xml -t cpp.tmpl")
+    print("\tpython BufferGenerate.py sources -t cpp.tmpl lua.tmpl -d targetsrc")
 
 def main():
 
@@ -230,13 +222,11 @@ def main():
 
     if len(sys.argv) == 1 or sys.argv[1] in ('-h', '--help'):
         help()
-        # DataStatistic.terminate_stat()
-        # sys.exit(0)
+        sys.exit(0)
 
     if len(sys.argv) > 1 and sys.argv[1] in ('-v', '--version'):
         print("%s" % VERSION)
-        # DataStatistic.terminate_stat()
-        # sys.exit(0)
+        sys.exit(0)
 
     try:
         # command = sys.argv[1]
